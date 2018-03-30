@@ -4,11 +4,15 @@
   "description": "Proyecto TFG: backend de la aplicacion",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server-test": "nodemon -e js,pug --exec \"mocha --compilers js:babel-core/register\" test/server-test/",
+    "client-test": "karma start",
+    "nodemon": "nodemon -e js,pug --exec babel-node  ./app/bin/www",
+    "start": "babel-node  ./app/bin/www"
   },
   "author": "alberto de lucas gomez",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^5.0.12"
@@ -18,11 +22,5 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "supertest": "^3.0.0"
-  },
-  "scripts": {
-    "server-test": "nodemon -e js,pug --exec \"mocha --compilers js:babel-core/register\" test/server-test/",
-    "client-test": "karma start",
-    "nodemon": "nodemon -e js,pug --exec babel-node  ./app/bin/www",
-    "start": "babel-node  ./app/bin/www"
   }
 }
