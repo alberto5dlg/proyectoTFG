@@ -1,6 +1,6 @@
 var express = require('express');
 var stationRouter = express.Router();
-var api = require('../API');
+var api = require('../API/station');
 
 stationRouter.get('/prueba', api.prueba);
 
