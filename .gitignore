@@ -2,3 +2,5 @@ App/node_modules
 App/app/client/static/bundle.js
 App/app/client/static/bundle.js.map
 npm-debug.log
+node_modules
+

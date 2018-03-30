@@ -1,14 +1,12 @@
-import ongoose from 'mongoose';
-
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-mongoose.Promise = global.Promise;
 
 const stationSchema = new Schema({
-        nombre:         {type: String, default:''},
-        temperatura:    {type: Schema.Decimal, default:''},
-        humedad:        {type: Schema.Decimal, default:''},
-        fecha:          {type: Schema.Date, default:''},
-        hora:           {type: Schema.Date, default:''}
+        nombre:         {type: String},
+        temperatura:    {type: Number},
+        humedad:        {type: Number},
+        fecha:          {type: Date},
+        hora:           {type: Date}
 });
 
-export { stationSchema };
+module.exports = mongoose.model('Station', stationSchema);

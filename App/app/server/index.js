@@ -1,25 +1,29 @@
 const express = require('express');
 const db = require('./bbdd');
-//import pathUtil from 'path';
+const bodyParser = require('body-parser');
+const app = express();
+app.use(bodyParser.json());
 
-//import { DBDisconnect } from '../../utils';
-//import { rootPath } from '../../conf';
+//Declaramos la variable de rutas del API
+const router = require('./routes/routes');
 
-//const bodyParser = require( 'body-parser' );
-//const allRoutes = require( './routes' );
-//const notFoundRoute = require( './routes/404' );
+app.use('/api', router);
+
+//Ruta generica del servidor
+app.get('/', function(pet, res){
+    res.send('API REST para projecto TFG')
+});
+
+//Puerto y conexion del API
+app.set('port', (process.env.PORT || 5000));
+
+app.listen(app.get('port'), function() {
+    console.log('Aplicacion Node.js ejecutandose en el puerto: '+ app.get('port'));
+});
+
 
 //Iniciamos la conexion a la BBDD
 db.DBConnect();
 
-//app.set( 'views', './app/client/views' );
-//app.set( 'view engine', 'pug' );
-
-//app.use( Express.static( pathUtil.join( rootPath, '/app/client' )));
-//app.use( bodyParser.json());
-//app.use( '/', allRoutes );
-//app.use( notFoundRoute );
-
-//process.on( 'SIGINT', DBDisconnect ).on( 'SIGTERM', DBDisconnect );
-
-module.exports = express;
+//exportamos el modulo
+module.exports = app;
