@@ -33,9 +33,32 @@ exports.getStation = function (pet, res) {
             } else  {
                 var response = {
                     station
-                }
+                };
                 res.status(200);
                 res.json(response);
             }
         });
 };
+
+exports.deleteStation = function(pet, res) {
+    var nameStation = pet.params.station;
+    stationRegister.findOne({nombre: nameStation }, function(err, data){
+        if(data == undefined){
+            res.status(404);
+            res.send('Estacion no existente, no se puede borrar');
+        } else {
+            data.remove(function(error){
+                if(!err) {
+                    res.status(204);
+                    res.send('Borrado correctamente');
+                    res.end();
+                }else {
+                    res.status(500);
+                    res.send('Error del servidor al borrar, intentelo de nuevo mas tarde');
+                    res.end();
+                    console.log('Error al borarr: ' + err.message);
+                }
+            })
+        }
+    })
+}
