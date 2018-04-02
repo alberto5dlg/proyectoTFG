@@ -16,7 +16,7 @@ exports.addStation = function(pet, res) {
                 res.status(400);
                 res.send("No se puede crear el usuario, algun campo es incorrecto");
             } else {
-                console.log("nueva estacion registrada: "+ newStation.toString());
+                console.log("nueva estacion registrada: "+ newStation.nombre.toString());
                 res.status(201);
                 //res.header('Location','http://'+utils.getHostname(pet)+'/api/usuarios/'+ newUsuario.login);
                 res.send(newStation);
@@ -61,4 +61,18 @@ exports.deleteStation = function(pet, res) {
             })
         }
     })
-}
+};
+
+exports.getAllRegisterStations = function(pet, res) {
+    var lista = stationRegister.find();
+
+    lista.then(function (stations){
+        res.status(200);
+        res.send(stations);
+    });
+    lista.catch(function(err){
+        res.status(500);
+        res.end();
+        console.log('Error: ' + e.message);
+    })
+};
