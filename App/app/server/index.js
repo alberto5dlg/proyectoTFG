@@ -12,7 +12,7 @@ const genericRoute = require('./routes/routeGeneric');
 const registerStationsRouter = require('./routes/registerStations');
 
 //Declaracion de rutas genericas
-app.use('/api', stationsRouter);
+app.use('/api/data', stationsRouter);
 app.use('/api/register', registerStationsRouter);
 app.use('/',genericRoute);
 app.use(notFoundRoute);

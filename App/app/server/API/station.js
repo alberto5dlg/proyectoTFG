@@ -5,46 +5,23 @@ var app = express();
 var utils = require('../utils/utils');
 var http = require('http');
 
-
+//Obtiene el historial de la estacion
 exports.getHistorico = function(pet, res) {
-    var lista = Station.find({nombre: pet.params.station});
+    var stationName = pet.params.station;
+    var lista = Station.find({nombre: stationName});
 
-    lista.then(function(station) {
-        var response = {
-            data: station
-        };
+    lista.then(function(stationData) {
         res.status(200);
-        res.send(response);
+        res.send(stationData);
     });
     lista.catch(function (err){
         res.status(500);
         res.end();
+        console.log('Error: ' + err.message);
     });
 };
 
-
-
-exports.addDataStation = function(pet, res) {
-    var station = new Station(pet.body);
-
-    if(station.nombre == undefined || station.temperatura == undefined || station.humedad == undefined){
-        res.status(400);
-        res.send("Faltan campos para poder añadir una entrada de este sensor ... ");
-    } else {
-        station.fecha = utils.fechaDeHoy();
-        station.hora = utils.getHora();
-        station.save(function(err, newStation) {
-            if(err){
-                res.status(400);
-                res.send("No se puede añadir la entrada del sensor ... ");
-            } else {
-                res.status(201);
-                res.send(newStation);
-            }
-        });
-    }
-};
-
+//Obtiene los datos en tiempo real de la estacion
 exports.getRemoteStation = function(pet, resp){
     var nombre = pet.params.station;
     stationRegister.findOne({nombre:nombre}, function(err, data){
@@ -78,8 +55,8 @@ exports.getRemoteStation = function(pet, resp){
     })
 };
 
+//Guarda los datos obtenidos de la estacion en la BBDD
 saveDataStation = function(nombre, body) {
-
     var newStation = Station();
     newStation.nombre = nombre;
     newStation.fecha = utils.getFechaCompleta();
