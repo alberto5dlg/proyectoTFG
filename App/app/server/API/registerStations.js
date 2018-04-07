@@ -23,8 +23,9 @@ exports.addStation = function(pet, res) {
             }
         });
     }
-}
+};
 
+//metodo para obtener los datos de la estacion registrada
 exports.getStation = function (pet, res) {
         stationRegister.findOne({nombre: pet.params.station}, function(err, station){
             if(station == undefined){
@@ -40,6 +41,7 @@ exports.getStation = function (pet, res) {
         });
 };
 
+//Borra una estacion registrada
 exports.deleteStation = function(pet, res) {
     var nameStation = pet.params.station;
     stationRegister.findOne({nombre: nameStation }, function(err, data){
@@ -63,6 +65,7 @@ exports.deleteStation = function(pet, res) {
     })
 };
 
+//Obtiene todas las estaciones registradas
 exports.getAllRegisterStations = function(pet, res) {
     var lista = stationRegister.find();
 
