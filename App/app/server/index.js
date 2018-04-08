@@ -10,10 +10,12 @@ const stationsRouter = require('./routes/station');
 const notFoundRoute = require( './routes/route404' );
 const genericRoute = require('./routes/routeGeneric');
 const registerStationsRouter = require('./routes/registerStations');
+const apiWeather = require('./routes/apiWeather');
 
 //Declaracion de rutas genericas
 app.use('/api/data', stationsRouter);
 app.use('/api/register', registerStationsRouter);
+app.use('/api/weather', apiWeather);
 app.use('/',genericRoute);
 app.use(notFoundRoute);
 
