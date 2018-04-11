@@ -1,7 +1,4 @@
-App/node_modules
-App/app/client/static/bundle.js
-App/app/client/static/bundle.js.map
+App/server/node_modules
 npm-debug.log
 node_modules
 .idea
-App/Data
