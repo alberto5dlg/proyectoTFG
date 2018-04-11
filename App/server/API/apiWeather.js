@@ -32,6 +32,7 @@ exports.getWeatherZone = function(pet, resp) {
                     bodyChunks.push(chunk);
                 }).on('end', function() {
                     var body = Buffer.concat(bodyChunks);
+                    body = JSON.parse(body);
                     resp.send(body);
                 })
             });
