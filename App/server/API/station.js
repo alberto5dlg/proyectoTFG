@@ -24,7 +24,7 @@ exports.getHistorico = function(pet, res) {
 //Obtiene los datos en tiempo real de la estacion
 exports.getRemoteStation = function(pet, resp){
     var nombre = pet.params.station;
-    stationRegister.findOne({nombre:nombre}, function(err, data){
+    stationRegister.findOne({id:nombre}, function(err, data){
 
        if(data == undefined){
             resp.status(404);

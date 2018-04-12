@@ -44,7 +44,7 @@ exports.getStation = function (pet, res) {
 //Borra una estacion registrada
 exports.deleteStation = function(pet, res) {
     var nameStation = pet.params.station;
-    stationRegister.findOne({nombre: nameStation }, function(err, data){
+    stationRegister.findOne({id: nameStation }, function(err, data){
         if(data == undefined){
             res.status(404);
             res.send('Estacion no existente, no se puede borrar');
