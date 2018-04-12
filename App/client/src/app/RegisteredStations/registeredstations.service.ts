@@ -6,11 +6,19 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class RegisteredStationsService {
 
-  private apiUrl = 'http://localhost:5000/api/register';
+  private apiUrl = 'http://localhost:5000/api/register/';
 
   constructor(private http: Http){ }
+
   getRegStations(): Promise<any>{
     return this.http.get(this.apiUrl)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
+  getStation(id: string): Promise<any>{
+    return this.http.get(this.apiUrl + id)
       .toPromise()
       .then(this.handleData)
       .catch(this.handleError)
