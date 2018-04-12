@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="starter-template">
+    <h1>Project TFG</h1>
+    <hr>
+    <h2>Estaciones Registradas</h2>
+    <div class="latestTodos">
+      <div class="row">
+        <!-- Boxes  -->
+        <div *ngFor="let station of regStations" class="col-xs-12 col-sm-6 col-lg-4">
+          <div class="box">
+            <div class="icon">
+              <div class="image"><i class="fa fa-tasks"></i></div>
+              <div class="info">
+                <h3 class="title">{{station.nombre}}</h3>
+                <div class="more">
+                  <a [routerLink]="['/station', station._id]" title="Obtener informacion de {{station.nombre}}">
+                    + info <i class="fa fa-angle-double-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="space"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

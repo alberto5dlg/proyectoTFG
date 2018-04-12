@@ -14,6 +14,7 @@
   "dependencies": {
     "arest": "^0.3.0",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^5.0.12",

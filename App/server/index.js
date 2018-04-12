@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const app = express();
 const utils = require('./utils/utils');
 app.use(bodyParser.json());
+var cors = require('cors');
+
+// use it before all route definitions
+app.use(cors({origin: 'http://localhost:4200'}));
 
 //Declaramos la variable de rutas del API
 const stationsRouter = require('./routes/station');
