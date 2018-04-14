@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import {Headers, Http, RequestOptions} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -24,10 +24,16 @@ export class RegisteredStationsService {
       .catch(this.handleError)
   }
 
+  addStation(station: any): Promise<any>{
+    return this.http.post(this.apiUrl, station)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
   //trabajaremos con los datos obtenidos
   private handleData(res: any) {
     let body = res.json();
-    console.log(body);
     return body || {};
   }
 

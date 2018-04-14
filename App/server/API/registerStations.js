@@ -5,7 +5,6 @@ var app = express();
 //METODO POST añadir nueva estacion
 exports.addStation = function(pet, res) {
     var station = new stationRegister(pet.body);
-
     if(station.nombre == undefined || station.ip == undefined){
         res.status(400);
         res.send("Faltan campos para poder añadir la estacion.");

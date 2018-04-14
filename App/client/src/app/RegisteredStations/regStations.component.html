@@ -1,5 +1,6 @@
-<h2 align="center">Lista de estaciones</h2>
-<div class="RegStationsBox">
+<h2 align="center" xmlns="http://www.w3.org/1999/html">Lista de estaciones</h2>
+<!-- Existen Estaciones, muestra tabla -->
+<div *ngIf="allStations.length > 0" class="RegStationsBox">
   <table id="mytable" class="table table-bordred table-striped">
     <thead>
     <th>Estacion</th>
@@ -8,7 +9,7 @@
     <th>Borrar</th>
     </thead>
     <tbody>
-    <tr *ngFor="let station of stations">
+    <tr *ngFor="let station of allStations">
       <td>{{station.nombre}}</td>
       <td><p data-placement="top" data-toggle="tooltip" title="View"><button class="btn btn-primary btn-xs " (click) = "viewStation(station)" data-title="View" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-search"></span></button></p></td>
       <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs " data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
@@ -17,6 +18,14 @@
     <tr>
     </tbody>
   </table>
+  <button class="btn btn-primary center-block btn-sm" data-title="Add" data-toggle="modal" data-target="#add">Añadir Estación</button>
+</div>
+
+<!-- No existe ninguna estacion -->
+<div *ngIf="allStations.length <= 0" class="RegStationEmptyBox">
+  <div align="center" class="alert alert-info" role="alert">
+    <strong>No hay ninguna estación registrada</strong>
+  </div>
 </div>
 
 
@@ -45,4 +54,54 @@
     </div>
   </div>
 </div>
+
+<!-- Modal ADD-->
+<div class="modal fade" id="add" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Aladir nueva estación</h4>
+      </div>
+      <div class="modal-body">
+        <div align="center">
+          <form (ngSubmit)="addNewStation(stationToAdd)" #addStationForm="ngForm">
+            <div class="form-group">
+              <label for="stationName">Nombre:</label>
+              <input type="text" [(ngModel)]="stationToAdd.nombre" #stationaddname="ngModel" class="form-control" name="stationName" id="stationName" required />
+              <div [hidden]="stationaddname.valid || stationaddname.pristine"
+                   class="alert alert-danger">
+                Es necesario el nombre de la estación
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="stationIp">Dirección IP:</label>
+              <input type="text" [(ngModel)]="stationToAdd.ip" #stationaddip="ngModel" class="form-control" name="stationIp" id="stationIp" required />
+              <div [hidden]="stationaddip.valid || stationaddip.pristine"
+                   class="alert alert-danger">
+                Es necesario la dirección IP de la estación
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="stationId">Id:</label>
+              <input type="text" [(ngModel)]="stationToAdd.id" #stationaddid="ngModel" class="form-control" name="stationId" id="stationId" required />
+              <div [hidden]="stationaddid.valid || stationaddid.pristine"
+                   class="alert alert-danger">
+                Es necesario el id de la estación
+              </div>
+            </div>
+            <button type="submit" [disabled]="!addStationForm.form.valid || !addStationForm.form.dirty" class="btn btn-success btn-block">Añadir</button>
+          </form>
+          <div style="margin:10px;" *ngIf="apiMessage" align="center" class="alert alert-success" role="alert">
+            <strong>{{apiMessage}}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
