@@ -38,6 +38,13 @@ export class RegisteredStationsService {
       .catch(this.handleError)
   }
 
+  deleteStation(station: any): Promise<any> {
+    return this.http.delete(this.apiUrl + station.id )
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleData)
+  }
+
   //trabajaremos con los datos obtenidos
   private handleData(res: any) {
     let body = res.json();
