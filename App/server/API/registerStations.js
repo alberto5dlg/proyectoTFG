@@ -78,3 +78,36 @@ exports.getAllRegisterStations = function(pet, res) {
         console.log('Error: ' + e.message);
     })
 };
+
+//Metodo PUT para editar la estacion especificada por ID
+exports.editStation = function(pet, res) {
+    var editStation = new stationRegister(pet.body);
+    var idToEdit = pet.params.station;
+
+    if(editStation.nombre == undefined || editStation.ip == undefined || editStation.id == undefined){
+        res.status(400);
+        res.send("Faltan campos para poder editar la estacion");
+    } else {
+        stationRegister.findOne({id: idToEdit}, function(err, data){
+            if(data == undefined){
+                res.status(404);
+                res.send("La estación a editar no existe");
+            } else {
+                data.nombre = editStation.nombre;
+                data.ip = editStation.ip;
+                data.id = editStation.id;
+                stationRegister.update({id: idToEdit}, data, function(err){
+                    if(err) {
+                        console.log(err);
+                        res.status(500);
+                        res.end();
+                    } else {
+                        res.status(202);
+                        res.send(data);
+                        res.end();
+                    }
+                });
+            }
+        });
+    }
+};
