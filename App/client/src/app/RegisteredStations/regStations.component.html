@@ -1,5 +1,6 @@
-<h2 align="center">Lista de estaciones</h2>
-<div class="RegStationsBox">
+<h2 align="center" xmlns="http://www.w3.org/1999/html">Lista de estaciones</h2>
+<!-- Existen Estaciones, muestra tabla -->
+<div *ngIf="allStations.length > 0" class="RegStationsBox">
   <table id="mytable" class="table table-bordred table-striped">
     <thead>
     <th>Estacion</th>
@@ -8,13 +9,175 @@
     <th>Borrar</th>
     </thead>
     <tbody>
-    <tr *ngFor="let station of stations">
+    <tr *ngFor="let station of allStations">
       <td>{{station.nombre}}</td>
-      <td><a  [routerLink]="['/station', station._id]" title="Ver detalles: {{station.nombre}}">+ info</a></td>
-      <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-      <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+      <td><p data-placement="top" data-toggle="tooltip" title="View"><button class="btn btn-primary btn-xs " (click) = "viewStation(station)" data-title="View" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-search"></span></button></p></td>
+      <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs " (click) = "viewStation(station)" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+      <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs " (click) = "viewStation(station)"data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
     </tr>
     <tr>
     </tbody>
   </table>
+  <button class="btn btn-primary center-block btn-sm" data-title="Add" data-toggle="modal" data-target="#add">Añadir Estación</button>
 </div>
+
+<!-- No existe ninguna estacion -->
+<div *ngIf="allStations.length <= 0" class="RegStationEmptyBox">
+  <div align="center" class="alert alert-info" role="alert">
+    <strong>No hay ninguna estación registrada</strong>
+  </div>
+</div>
+
+
+<!-- Modal VIEW -->
+<div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center" id="exampleModalLabel">Datos Estación</h3>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="form-group">
+            <label>Nombre: {{station.nombre}}</label>
+            <br>
+            <label>Dir. IP: {{station.ip}}</label>
+            <br>
+            <label>Estacion:</label> <label >{{station.id}}</label>
+            <br>
+          </div>
+        </div>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default center-block" data-dismiss="modal" (click)="cleanApiMessage()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ADD-->
+<div class="modal fade" id="add" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Añadir nueva estación</h4>
+      </div>
+      <div class="modal-body">
+        <div align="center">
+          <form (ngSubmit)="addNewStation(stationToAdd)" #addStationForm="ngForm">
+            <div class="form-group">
+              <label for="stationName">Nombre:</label>
+              <input type="text" [(ngModel)]="stationToAdd.nombre" #stationaddname="ngModel" class="form-control" name="stationName" id="stationName" required />
+              <div [hidden]="stationaddname.valid || stationaddname.pristine"
+                   class="alert alert-danger">
+                Es necesario el nombre de la estación
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="stationIp">Dirección IP:</label>
+              <input type="text" [(ngModel)]="stationToAdd.ip" #stationaddip="ngModel" class="form-control" name="stationIp" id="stationIp" required />
+              <div [hidden]="stationaddip.valid || stationaddip.pristine"
+                   class="alert alert-danger">
+                Es necesario la dirección IP de la estación
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="stationId">Id:</label>
+              <input type="text" [(ngModel)]="stationToAdd.id" #stationaddid="ngModel" class="form-control" name="stationId" id="stationId" required />
+              <div [hidden]="stationaddid.valid || stationaddid.pristine"
+                   class="alert alert-danger">
+                Es necesario el id de la estación
+              </div>
+            </div>
+            <button type="submit" [disabled]="!addStationForm.form.valid || !addStationForm.form.dirty" class="btn btn-success btn-block">Añadir</button>
+          </form>
+          <div style="margin:10px;" *ngIf="apiMessage" align="center" class="alert alert-success" role="alert">
+            <strong>{{apiMessage}}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cleanApiMessage()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal EDIT-->
+<div class="modal fade" id="edit" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Editar estación</h4>
+      </div>
+      <div class="modal-body">
+        <div align="center">
+          <form (ngSubmit)="editStation(stationToEdit)" #editStationForm="ngForm">
+            <div class="form-group">
+              <label for="stationEditName">Nombre:</label>
+              <input type="text" [(ngModel)]="stationToEdit.nombre" #stationeditname="ngModel" class="form-control" name="stationName" id="stationEditName" value="{{station.nombre}}" required />
+              <div [hidden]="stationeditname.valid || stationeditip.pristine"
+                   class="alert alert-danger">
+                Es necesario el nombre de la estación
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="stationEditIp">Dirección IP:</label>
+              <input type="text" [(ngModel)]="stationToEdit.ip" #stationeditip="ngModel" class="form-control" name="stationEditIp" id="stationEditIp" value="{{station.ip}}" required />
+              <div [hidden]="stationeditip.valid || stationeditip.pristine"
+                   class="alert alert-danger">
+                Es necesario la dirección IP de la estación
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="stationEditId">Id:</label>
+              <input type="text" [(ngModel)]="stationToEdit.id" #stationeditid="ngModel" class="form-control" name="stationEditId" id="stationEditId" value="{{station.id}}" required />
+              <div [hidden]="stationeditip.valid || stationeditip.pristine"
+                   class="alert alert-danger">
+                Es necesario el id de la estación
+              </div>
+            </div>
+            <button type="submit" [disabled]="!editStationForm.form.valid || !editStationForm.form.dirty" class="btn btn-success btn-block">Editar</button>
+          </form>
+          <div style="margin:10px;" *ngIf="apiMessage" align="center" class="alert alert-success" role="alert">
+            <strong>{{apiMessage}}</strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cleanApiMessage()" >Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal DELETE -->
+<div class="modal fade" id="delete" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Borrar Estación</h4>
+      </div>
+      <div class="modal-body">
+        <div align="center">
+          <div *ngIf="!apiMessage" align="center" class="alert alert-danger" role="alert">
+            <p>¿Desea borrar la estación?</p>
+            <strong>{{station.nombre}}</strong>
+          </div>
+          <div style="margin:10px;" *ngIf="apiMessage" align="center" class="alert alert-success" role="alert">
+            <strong>{{station.nombre}}</strong>  {{apiMessage}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" *ngIf="!apiMessage" (click)="deleteStation(station)">Borrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cleanApiMessage()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

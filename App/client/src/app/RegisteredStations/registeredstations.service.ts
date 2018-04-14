@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import {Headers, Http, RequestOptions} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class RegisteredStationsService {
 
-  private apiUrl = 'http://localhost:5000/api/register';
+  private apiUrl = 'http://localhost:5000/api/register/';
 
   constructor(private http: Http){ }
+
   getRegStations(): Promise<any>{
     return this.http.get(this.apiUrl)
       .toPromise()
@@ -16,10 +17,37 @@ export class RegisteredStationsService {
       .catch(this.handleError)
   }
 
+  getStation(id: string): Promise<any>{
+    return this.http.get(this.apiUrl + id)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
+  addStation(station: any): Promise<any>{
+    return this.http.post(this.apiUrl, station)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
+  editStation(station: any, idToEdit: string): Promise<any>{
+    return this.http.put(this.apiUrl+idToEdit, station)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
+  deleteStation(station: any): Promise<any> {
+    return this.http.delete(this.apiUrl + station.id )
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleData)
+  }
+
   //trabajaremos con los datos obtenidos
   private handleData(res: any) {
     let body = res.json();
-    console.log(body);
     return body || {};
   }
 
