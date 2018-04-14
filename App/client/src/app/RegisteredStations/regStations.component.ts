@@ -14,6 +14,7 @@ export class RegStationComponent implements OnInit {
   allStations:any[] = [];
   station:any = {};
   stationToAdd: any = {};
+  stationToEdit: any = {};
   apiMessage:string;
 
   constructor(private registerStations:RegisteredStationsService) { }
@@ -31,10 +32,22 @@ export class RegStationComponent implements OnInit {
     if(!station) {return; }
     this.registerStations.addStation(station)
       .then(st => {
-        console.log(st);
         this.allStations.push(st);
         this.apiMessage = "Añadido Correctamente";
       })
   }
 
+  editStation(pstation: any): void {
+    if(!pstation) {return; }
+
+    this.registerStations.editStation(pstation, this.station.id)
+      .then(st => {
+        var index = this.allStations.indexOf(this.station);
+        this.allStations[index] = st;
+        this.apiMessage = "Modificado correctamente";
+      })
+      .catch(st => {
+        this.apiMessage = st;
+      })
+  }
 }

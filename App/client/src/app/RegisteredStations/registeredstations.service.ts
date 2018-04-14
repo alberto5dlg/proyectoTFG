@@ -31,6 +31,13 @@ export class RegisteredStationsService {
       .catch(this.handleError)
   }
 
+  editStation(station: any, idToEdit: string): Promise<any>{
+    return this.http.put(this.apiUrl+idToEdit, station)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
   //trabajaremos con los datos obtenidos
   private handleData(res: any) {
     let body = res.json();
