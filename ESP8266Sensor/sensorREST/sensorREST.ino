@@ -40,8 +40,8 @@ void setup(void)
   rest.variable("humedad",&humidity);
     
   // Give name and ID to device
-  rest.set_id("1");
-  rest.set_name("sensor_cocina");
+  rest.set_id("sensor_cocina");
+  rest.set_name("Cocina");
   
   // Connect to WiFi
   WiFi.begin(ssid, password);
