@@ -7,8 +7,8 @@ var http = require('http');
 
 //Obtiene el historial de la estacion
 exports.getHistorico = function(pet, res) {
-    var stationName = pet.params.station;
-    var lista = Station.find({nombre: stationName});
+    var stationId = pet.params.station;
+    var lista = Station.find({idStation: stationId});
 
     lista.then(function(stationData) {
         res.status(200);
@@ -23,12 +23,12 @@ exports.getHistorico = function(pet, res) {
 
 //Obtiene los datos en tiempo real de la estacion
 exports.getRemoteStation = function(pet, resp){
-    var nombre = pet.params.station;
-    stationRegister.findOne({id:nombre}, function(err, data){
+    var idStation = pet.params.station;
+    stationRegister.findOne({id:idStation}, function(err, data){
 
        if(data == undefined){
             resp.status(404);
-            resp.send("La estacion " + nombre + " no existe");
+            resp.send("La estacion " + idStation + " no existe");
        } else {
            var req = http.get('http://'+data.ip, function(res) {
                console.log('STATUS: ' + res.statusCode);
@@ -42,7 +42,8 @@ exports.getRemoteStation = function(pet, resp){
                    console.log('BODY: ' + body);
                    resp.send(body);
                    var variables = JSON.parse(body);
-                   saveDataStation(nombre, variables);
+                   console.log("HHH");
+                   saveDataStation(variables);
                })
            });
 
@@ -56,12 +57,29 @@ exports.getRemoteStation = function(pet, resp){
 };
 
 //Guarda los datos obtenidos de la estacion en la BBDD
-saveDataStation = function(nombre, body) {
+saveDataStation = function(body) {
     var newStation = Station();
-    newStation.nombre = nombre;
+    newStation.idStation = body.id;
+    newStation.nombre = body.nombre;
     newStation.fecha = utils.getFechaCompleta();
     newStation.temperatura = body.variables.temperatura;
     newStation.humedad = body.variables.humedad;
+    newStation.save(function (error, sta){
+        if(error)
+            console.log('Error al guardar los datos: '+ error.message);
+        else
+            console.log('Guardados los datos con exito');
+    })
+
+};
+
+exports.saveDataStation2 = function(temp, humedad) {
+    var newStation = Station();
+    newStation.idStation = "sensor_cocina";
+    newStation.nombre = "Cocina";
+    newStation.fecha = utils.getFechaCompleta();
+    newStation.temperatura = temp;
+    newStation.humedad = humedad;
     newStation.save(function (error, sta){
         if(error)
             console.log('Error al guardar los datos: '+ error.message);

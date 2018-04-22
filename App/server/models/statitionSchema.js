@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const utils = require('../utils/utils');
 
 const stationSchema = new Schema({
+        idStation:      {type: String},
         nombre:         {type: String},
         temperatura:    {type: Number},
         humedad:        {type: Number},
