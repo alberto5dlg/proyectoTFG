@@ -26,22 +26,24 @@ WiFiServer server(LISTEN_PORT);
 // Variables to be exposed to the API
 int temperature;
 int humidity;
+String nombre = "Cocina"; 
 
 void setup(void)
 {  
   // Start Serial
   Serial.begin(115200);
-  
+    
   // Init DHT 
   dht.begin();
   
   // Init variables and expose them to REST API
   rest.variable("temperatura",&temperature);
   rest.variable("humedad",&humidity);
+  rest.variable("nombre", &nombre); 
     
   // Give name and ID to device
-  rest.set_id("sensor_cocina");
-  rest.set_name("Cocina");
+  rest.set_id("1");
+  rest.set_name("sensor_cocina");
   
   // Connect to WiFi
   WiFi.begin(ssid, password);
@@ -51,18 +53,16 @@ void setup(void)
   }
   Serial.println("");
   Serial.println("WiFi connected");
- 
+  
   // Start the server
   server.begin();
   Serial.println("Server started");
   
   // Print the IP address
   Serial.println(WiFi.localIP());
-  
 }
 
 void loop() {
-  
   // Reading temperature and humidity
   temperature = dht.readTemperature();
   humidity = dht.readHumidity();
