@@ -1,19 +1,27 @@
 <div align="center">
   <h3>Datos de la Estación</h3>
-  <div *ngIf="dataStation" class="col-md-4">
-    <h3>{{dataStation.nombre}}</h3>
-    <hr>
-    <p class="text-left" style="padding-left: 50px"><b>Temperatura:</b> {{dataStation.temperatura}}</p>
-    <p class="text-left" style="padding-left: 50px"><b>Humedad:</b> {{dataStation.humedad}}</p>
-    <p class="text-left" style="padding-left: 50px"><b>Fecha:</b> {{dataStation.fecha}}</p>
-    <h3>Temperatura Local</h3>
-    <hr>
-    <p class="text-left" style="padding-left: 50px"><b>Población:</b> {{localWheather[0].nombre}}</p>
-    <p class="text-left" style="padding-left: 50px"><b>Temperatura Max:</b> {{localWheather[0].prediccion.dia[0].temperatura.maxima}}</p>
-    <p class="text-left" style="padding-left: 50px"><b>Temperatura Min:</b> {{localWheather[0].prediccion.dia[0].temperatura.minima}}</p>
-    <p class="text-left" style="padding-left: 50px"><b>Humedad Max:</b> {{localWheather[0].prediccion.dia[0].humedadRelativa.maxima}}</p>
-    <p class="text-left" style="padding-left: 50px"><b>Humedad Min:</b> {{localWheather[0].prediccion.dia[0].humedadRelativa.minima}}</p>
-
+  <div class="col-md-4">
+    <div *ngIf="dataStation">
+      <h3>{{dataStation.variables.nombre}}</h3>
+      <hr>
+      <p class="text-left" style="padding-left: 50px"><b>Temperatura:</b> {{dataStation.variables.temperatura}}</p>
+      <p class="text-left" style="padding-left: 50px"><b>Humedad:</b> {{dataStation.variables.humedad}}</p>
+      <p class="text-left" style="padding-left: 50px"><b>Fecha:</b> {{fecha}}</p>
+    </div>
+    <div *ngIf="!dataStation">
+      <h3>La estación no esta conectada</h3>
+      <hr>
+      <p>La estación no se encuentra conectada a la red o tiene algun problema de funcionamiento ... </p>
+    </div>
+    <div>
+      <h3>Temperatura Local</h3>
+      <hr>
+      <p class="text-left" style="padding-left: 50px"><b>Población:</b> {{localWheather[0].nombre}}</p>
+      <p class="text-left" style="padding-left: 50px"><b>Temperatura Max:</b> {{localWheather[0].prediccion.dia[0].temperatura.maxima}}</p>
+      <p class="text-left" style="padding-left: 50px"><b>Temperatura Min:</b> {{localWheather[0].prediccion.dia[0].temperatura.minima}}</p>
+      <p class="text-left" style="padding-left: 50px"><b>Humedad Max:</b> {{localWheather[0].prediccion.dia[0].humedadRelativa.maxima}}</p>
+      <p class="text-left" style="padding-left: 50px"><b>Humedad Min:</b> {{localWheather[0].prediccion.dia[0].humedadRelativa.minima}}</p>
+    </div>
   </div>
 
 

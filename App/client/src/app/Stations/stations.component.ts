@@ -15,16 +15,12 @@ import { StationsService } from "./stations.service";
 export class StationsComponent implements OnInit {
 
   idStation: string;
-  dataStation:any = {
-    id: 'sensor_cocina',
-    nombre:'Cocina',
-    temperatura: 23.0,
-    humedad: 66.0,
-    fecha: Date.now()
-  };
+  dataStation:any;
   historialStation:any[];
   historial:any[];
   localWheather:any[];
+  fecha:Date = new Date().toLocaleString();
+
 
 
   //Variables Grafico
@@ -36,7 +32,7 @@ export class StationsComponent implements OnInit {
     responsive: true,
     title: {
       display:true,
-      text: 'Últimas 24H'
+      text: 'Últimos datos'
     }
   };
 
@@ -50,12 +46,22 @@ export class StationsComponent implements OnInit {
   ){ }
 
   ngOnInit(): void {
-    this.stationServ.getHistoricoStation('sensor_cocina')
+    this.route.params.subscribe(params => {
+      this.idStation = params['id'];
+    });
+
+    this.stationServ.getHistoricoStation(this.idStation)
       .then(st => {
         this.historialStation = st;
         this.historial = this.historialStation;
         this.setData(this.historial);
       });
+
+    this.stationServ.getDataStation(this.idStation)
+      .then(st => {
+        this.dataStation = st;
+    });
+
     this.stationServ.getLocalWeather('Benidorm')
       .then(wt => { this.localWheather = wt})
   }
@@ -75,7 +81,7 @@ export class StationsComponent implements OnInit {
       humedad.push(historial[i].humedad);
       var date = new Date(historial[i].fecha);
       date.setHours(date.getHours() - 2);
-      fecha.push(date.toLocaleTimeString());
+      fecha.push(date.toLocaleString());
     }
     this.lineChartLabels = fecha;
     this.lineChartData= [

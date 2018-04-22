@@ -35,7 +35,6 @@ export class StationsService {
   //trabajaremos con los datos obtenidos
   private handleData(res: any) {
     let body = res.json();
-    console.log(body);
     return body || {};
   }
 
