@@ -31,18 +31,13 @@ exports.getRemoteStation = function(pet, resp){
             resp.send("La estacion " + idStation + " no existe");
        } else {
            var req = http.get('http://'+data.ip, function(res) {
-               console.log('STATUS: ' + res.statusCode);
-               console.log('HEADERS: ' + JSON.stringify(res.headers));
-
                var bodyChunks = [];
                res.on('data', function(chunk) {
                    bodyChunks.push(chunk);
                }).on('end', function() {
                    var body = Buffer.concat(bodyChunks);
-                   console.log('BODY: ' + body);
                    resp.send(body);
                    var variables = JSON.parse(body);
-                   console.log("HHH");
                    saveDataStation(variables);
                })
            });
@@ -59,8 +54,8 @@ exports.getRemoteStation = function(pet, resp){
 //Guarda los datos obtenidos de la estacion en la BBDD
 saveDataStation = function(body) {
     var newStation = Station();
-    newStation.idStation = body.id;
-    newStation.nombre = body.nombre;
+    newStation.idStation = body.name;
+    newStation.nombre = body.variables.nombre;
     newStation.fecha = utils.getFechaCompleta();
     newStation.temperatura = body.variables.temperatura;
     newStation.humedad = body.variables.humedad;
