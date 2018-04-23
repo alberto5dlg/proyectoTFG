@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import {Headers, Http, RequestOptions} from '@angular/http';
+import { DOCUMENT } from '@angular/platform-browser';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class RegisteredStationsService {
 
-  private apiUrl = 'http://localhost:5000/api/register/';
+  constructor(private http: Http, @Inject(DOCUMENT) private document: any){ }
 
-  constructor(private http: Http){ }
+  private apiUrl = 'http://'+ this.document.location.hostname +':5000/api/register/';
 
   getRegStations(): Promise<any>{
     return this.http.get(this.apiUrl)

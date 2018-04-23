@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Headers, Http, RequestOptions} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import {DOCUMENT} from "@angular/platform-browser";
 
 @Injectable()
 export class StationsService {
 
-  private apiUrl = 'http://localhost:5000/api/data/';
-  private apiWeather = 'http://localhost:5000/api/weather/';
+  private apiUrl = 'http://'+ this.document.location.hostname +':5000/api/data/';
+  private apiWeather = 'http://'+ this.document.location.hostname +':5000/api/weather/';
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, @Inject(DOCUMENT) private document: any){ }
 
   getDataStation(id: string): Promise<any> {
     return this.http.get(this.apiUrl + id)
