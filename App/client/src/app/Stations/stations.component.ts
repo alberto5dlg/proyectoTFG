@@ -19,7 +19,7 @@ export class StationsComponent implements OnInit {
   historialStation:any[];
   historial:any[];
   localWheather:any[];
-  fecha:Date = new Date().toLocaleString();
+  fecha:string = new Date().toLocaleString();
 
 
 

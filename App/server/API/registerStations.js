@@ -26,7 +26,7 @@ exports.addStation = function(pet, res) {
 
 //metodo para obtener los datos de la estacion registrada
 exports.getStation = function (pet, res) {
-        stationRegister.findOne({nombre: pet.params.station}, function(err, station){
+        stationRegister.findOne({id: pet.params.station}, function(err, station){
             if(station == undefined){
                 res.status(404);
                 res.send("Estacion no existente.");

@@ -4,10 +4,7 @@
   "description": "Proyecto TFG: backend de la aplicacion",
   "main": "index.js",
   "scripts": {
-    "server-test": "nodemon -e js,pug --exec \"mocha --compilers js:babel-core/register\" test/server-test/",
-    "client-test": "karma start",
-    "nodemon": "nodemon -e js,pug --exec babel-node  ./app/bin/www",
-    "start": "babel-node  ./app/bin/www"
+    "start": "node index.js"
   },
   "author": "alberto de lucas gomez",
   "license": "ISC",
