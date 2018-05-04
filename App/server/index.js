@@ -32,5 +32,12 @@ app.listen(app.get('port'), function() {
 //Iniciamos la conexion a la BBDD
 db.DBConnect();
 
+//Lectura de datos automaticamente cada cierto tiempo
+var CronJob = require('cron').CronJob;
+
+new CronJob('15 10 * * * *', function() {
+    utils.getDataAllStations();
+}, null, true);
+
 //exportamos el modulo
 module.exports = app;

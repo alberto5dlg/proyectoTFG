@@ -63,23 +63,6 @@ saveDataStation = function(body) {
         if(error)
             console.log('Error al guardar los datos: '+ error.message);
         else
-            console.log('Guardados los datos con exito');
+            console.log('Guardados los datos con exito de: ' + body.name);
     })
-
-};
-
-exports.saveDataStation2 = function(temp, humedad) {
-    var newStation = Station();
-    newStation.idStation = "sensor_cocina";
-    newStation.nombre = "Cocina";
-    newStation.fecha = utils.getFechaCompleta();
-    newStation.temperatura = temp;
-    newStation.humedad = humedad;
-    newStation.save(function (error, sta){
-        if(error)
-            console.log('Error al guardar los datos: '+ error.message);
-        else
-            console.log('Guardados los datos con exito');
-    })
-
 };
