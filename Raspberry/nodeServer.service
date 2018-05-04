@@ -1,0 +1,12 @@
+[Unit]
+Description=Servidor Node.js
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+ExectStart=/usr/bin/node /opt/nodeServer/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=Cliente AngularJS
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/angularClient
+ExectStart=/usr/bin/ng serve --host 0.0.0.0 
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
