@@ -1,3 +1,6 @@
+var stationRegister = require('../models/registerStationsSchema');
+var Station = require('../models/statitionSchema');
+var http = require('http');
 
 exports.fechaDeHoy = function(){
     var today = new Date();
@@ -55,4 +58,26 @@ exports.getHostname = function(pet) {
     }
     else
         return pet.hostname;
+};
+
+exports.getDataAllStations = function(){
+    var lista = stationRegister.find();
+
+    lista.then(function (stations){
+        for(var i = 0; i < stations.length; i++){
+            var req = http.get('http://'+stations[i].ip, function(res) {
+                var bodyChunks = [];
+                res.on('data', function(chunk) {
+                    bodyChunks.push(chunk);
+                }).on('end', function() {
+                    var body = Buffer.concat(bodyChunks);
+                    var variables = JSON.parse(body);
+                    saveDataStation(variables);
+                })
+            });
+            req.on('error', function(e) {
+                console.log('ERROR: ' + e.message);
+            });
+        }
+    });
 };
