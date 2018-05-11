@@ -25,7 +25,8 @@ export class StationsComponent implements OnInit {
 
   //Variables Grafico
   public lineChartLabels: Array<any>;
-  public lineChartData: Array<any>;
+  public lineChartDataHumidity: Array<any>;
+  public lineChartDataTemperature: Array<any>;
   public lineChartLegend = true;
   public lineChartType = 'line';
   public lineChartOptions: any = {
@@ -84,8 +85,10 @@ export class StationsComponent implements OnInit {
       fecha.push(date.toLocaleString());
     }
     this.lineChartLabels = fecha;
-    this.lineChartData= [
-      {data: temperatura, label: 'Temperatura'},
+    this.lineChartDataTemperature= [
+      {data: temperatura, label: 'Temperatura'}
+    ];
+    this.lineChartDataHumidity= [
       {data: humedad, label: 'Humedad'}
     ];
   }
