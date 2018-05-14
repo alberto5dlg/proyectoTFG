@@ -32,18 +32,18 @@
 
   <!-- GRAFICAS -->
   <!-- GRAFICA TEMPERATURA -->
-  <div class="col-md-6" align="center" *ngIf="lineChartDataTemperature">
+  <div class="col-md-6" align="center" *ngIf="chartVariables.lineChartDataTemperature">
       <div style="display: block;">
         <canvas baseChart width="848" height="424"
-                [datasets]="lineChartDataTemperature"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptionsTemperature"
-                [colors]="lineChartColorsTemperature"
-                [legend]="lineChartLegend"
-                [chartType]="lineChartType">
+                [datasets]="chartVariables.lineChartDataTemperature"
+                [labels]="chartVariables.lineChartLabels"
+                [options]="chartVariables.lineChartOptionsTemperature"
+                [colors]="chartVariables.lineChartColorsTemperature"
+                [legend]="chartVariables.lineChartLegend"
+                [chartType]="chartVariables.lineChartType">
         </canvas>
       </div>
-    <!-- FILTRAR POR FECHAS 
+    <!-- FILTRAR POR FECHAS
       <form (change)="setDataTemp($event.target.value)" id="dateTemperature" class="form-inline">
         <div class="form-group">
           <label for="date-temperature">Fecha: </label>
@@ -54,15 +54,15 @@
   </div>
 
   <!-- GRAFICA HUMEDAD -->
-  <div class="col-md-6" align="center" *ngIf="lineChartDataHumidity">
+  <div class="col-md-6" align="center" *ngIf="chartVariables.lineChartDataHumidity">
     <div style="display: block;">
       <canvas baseChart width="848" height="424"
-              [datasets]="lineChartDataHumidity"
-              [labels]="lineChartLabels"
-              [options]="lineChartOptionsHumidity"
-              [colors]="lineChartColorsHumidity"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType">
+              [datasets]="chartVariables.lineChartDataHumidity"
+              [labels]="chartVariables.lineChartLabels"
+              [options]="chartVariables.lineChartOptionsHumidity"
+              [colors]="chartVariables.lineChartColorsHumidity"
+              [legend]="chartVariables.lineChartLegend"
+              [chartType]="chartVariables.lineChartType">
       </canvas>
     </div>
     <!-- FILTRAR POR FECHAS

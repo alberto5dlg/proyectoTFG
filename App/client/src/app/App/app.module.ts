@@ -13,6 +13,7 @@ import { regStationsRoutingModule} from '../Routing/regStations-routing.module';
 
 import { RegisteredStationsService } from '../RegisteredStations/registeredstations.service';
 import { StationsService } from "../Stations/stations.service";
+import { chartVariables } from "../Stations/chartVariables.component";
 import { RegStationComponent } from '../RegisteredStations/regStations.component';
 import { StationsComponent } from "../Stations/stations.component";
 
@@ -21,7 +22,8 @@ import { StationsComponent } from "../Stations/stations.component";
     AppComponent,
     HomePageComponent,
     RegStationComponent,
-    StationsComponent
+    StationsComponent,
+    chartVariables
   ],
 
   imports: [
@@ -30,10 +32,11 @@ import { StationsComponent } from "../Stations/stations.component";
     regStationsRoutingModule,
     HttpModule,
     FormsModule,
-    ChartsModule
+    ChartsModule,
+
   ],
 
-  providers: [RegisteredStationsService, StationsService],
+  providers: [RegisteredStationsService, StationsService, chartVariables],
 
   bootstrap: [AppComponent]
 })
