@@ -1,5 +1,8 @@
 <div align="center">
   <h3>Datos de la Estación</h3>
+
+  <!-- DATOS ESTACION Y LOCAL -->
+  <div class="col-md-2"></div>
   <div class="col-md-4">
     <div *ngIf="dataStation">
       <h3>{{dataStation.variables.nombre}}</h3>
@@ -13,6 +16,8 @@
       <hr>
       <p>La estación no se encuentra conectada a la red o tiene algun problema de funcionamiento ... </p>
     </div>
+  </div>
+  <div class="col-md-4">
     <div>
       <h3>Temperatura Local</h3>
       <hr>
@@ -23,32 +28,57 @@
       <p class="text-left" style="padding-left: 50px"><b>Humedad Min:</b> {{localWheather[0].prediccion.dia[0].humedadRelativa.minima}}</p>
     </div>
   </div>
+  <div class="col-md-2"></div>
 
-
-  <div class="col-md-6" align="center" *ngIf="lineChartData">
+  <!-- GRAFICAS -->
+  <!-- GRAFICA TEMPERATURA -->
+  <div class="col-md-6" align="center" *ngIf="chartVariables.lineChartDataTemperature">
       <div style="display: block;">
         <canvas baseChart width="848" height="424"
-                [datasets]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [legend]="lineChartLegend"
-                [chartType]="lineChartType">
+                [datasets]="chartVariables.lineChartDataTemperature"
+                [labels]="chartVariables.lineChartLabels"
+                [options]="chartVariables.lineChartOptionsTemperature"
+                [colors]="chartVariables.lineChartColorsTemperature"
+                [legend]="chartVariables.lineChartLegend"
+                [chartType]="chartVariables.lineChartType">
         </canvas>
       </div>
-      <button id="buttonChange" class="btn-xs btn-outline-info" (click)="randomizeType()" style="display: inline-block">Cambiar</button>
+    <!-- FILTRAR POR FECHAS
+      <form (change)="setDataTemp($event.target.value)" id="dateTemperature" class="form-inline">
+        <div class="form-group">
+          <label for="date-temperature">Fecha: </label>
+          <input type="date" id="date-temperature" class="form-control mx-sm-3">
+        </div>
+      </form>
+    -->
   </div>
 
-  <!--<div class="col-md-12">
-    <button (click)="goBack()" type="button" class="btn btn-danger">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      Volver
-    </button>
-  </div>-->
+  <!-- GRAFICA HUMEDAD -->
+  <div class="col-md-6" align="center" *ngIf="chartVariables.lineChartDataHumidity">
+    <div style="display: block;">
+      <canvas baseChart width="848" height="424"
+              [datasets]="chartVariables.lineChartDataHumidity"
+              [labels]="chartVariables.lineChartLabels"
+              [options]="chartVariables.lineChartOptionsHumidity"
+              [colors]="chartVariables.lineChartColorsHumidity"
+              [legend]="chartVariables.lineChartLegend"
+              [chartType]="chartVariables.lineChartType">
+      </canvas>
+    </div>
+    <!-- FILTRAR POR FECHAS
+     <form (change)="setDataTemp($event.target.value)" id="dateTemperature" class="form-inline">
+       <div class="form-group">
+         <label for="date-temperature">Fecha: </label>
+         <input type="date" id="date-temperature" class="form-control mx-sm-3">
+       </div>
+     </form>
+   -->
+  </div>
 
-  <div class="col-md-3"></div>
-  <div *ngIf="historial" class="col-md-6" style=" margin-top: 30px;">
-    <button class="btn btn-sm btn-info" (click)="changeVisibility()">Mostrar/Ocultar historial completo</button>
-    <table [hidden]="ocultar" class="table table-sm table-hover" style="width: 70%">
+<!-- TABLA HISTORIAL -->
+  <div *ngIf="historial" class="col-md-12 center-block" style=" margin-top: 30px;">
+    <button class="btn btn-sm btn-info " (click)="changeVisibility()">Mostrar/Ocultar historial completo</button>
+    <table [hidden]="ocultar" class="table table-responsive table-sm table-hover" style="width: 50%">
       <thead>
       <tr>
         <th scope="col">Fecha</th>
@@ -65,4 +95,5 @@
       </tbody>
     </table>
   </div>
+
 </div>

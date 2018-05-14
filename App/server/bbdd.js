@@ -5,6 +5,7 @@ const  mongoose = require('mongoose');
 
 exports.DBConnect = () => {
     const dbUri = 'mongodb://alberto5dlg:1234abcd@ds241489.mlab.com:41489/tfgproject';
+    //const dbUri = 'mongodb://localhost:27017/tfgproject';
     mongoose.connect(dbUri, function(err, res) {
         if(err) {
             console.log('ERROR: En la conexion con la Base de Datos. ' + err);

@@ -39,7 +39,7 @@ export class RegStationComponent implements OnInit {
 
   editStation(pstation: any): void {
     if(!pstation) {return; }
-
+    pstation.id = this.station.id;
     this.registerStations.editStation(pstation, this.station.id)
       .then(st => {
         var index = this.allStations.indexOf(this.station);
