@@ -37,12 +37,12 @@
         <canvas baseChart width="848" height="424"
                 [datasets]="lineChartDataTemperature"
                 [labels]="lineChartLabels"
-                [options]="lineChartOptions"
+                [options]="lineChartOptionsTemperature"
+                [colors]="lineChartColorsTemperature"
                 [legend]="lineChartLegend"
                 [chartType]="lineChartType">
         </canvas>
       </div>
-      <button id="buttonChange" class="btn-xs btn-outline-info" (click)="randomizeType()" style="display: inline-block">Cambiar</button>
   </div>
 
   <!-- GRAFICA HUMEDAD -->
@@ -51,12 +51,12 @@
       <canvas baseChart width="848" height="424"
               [datasets]="lineChartDataHumidity"
               [labels]="lineChartLabels"
-              [options]="lineChartOptions"
+              [options]="lineChartOptionsHumidity"
+              [colors]="lineChartColorsHumidity"
               [legend]="lineChartLegend"
               [chartType]="lineChartType">
       </canvas>
     </div>
-    <button id="buttonChange" class="btn-xs btn-outline-info" (click)="randomizeType()" style="display: inline-block">Cambiar</button>
   </div>
 
 <!-- TABLA HISTORIAL -->

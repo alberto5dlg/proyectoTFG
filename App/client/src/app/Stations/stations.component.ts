@@ -25,8 +25,6 @@ export class StationsComponent implements OnInit {
 
   //Variables Grafico
   public lineChartLabels: Array<any>;
-  public lineChartDataHumidity: Array<any>;
-  public lineChartDataTemperature: Array<any>;
   public lineChartLegend = true;
   public lineChartType = 'line';
   public lineChartOptions: any = {
@@ -36,6 +34,61 @@ export class StationsComponent implements OnInit {
       text: 'Últimos datos'
     }
   };
+
+  public lineChartDataHumidity: Array<any>;
+  public lineChartOptionsHumidity: any = {
+    responsive: true,
+    title: {
+      display:true,
+      text: 'Últimos datos'
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          min: 0,
+          max: 100
+        }
+      }]
+    }
+  };
+  public lineChartColorsHumidity:Array<any> = [
+    { // grey
+      backgroundColor: 'rgba(255, 51, 0,0.2)',
+      borderColor: 'rgba(255, 51, 0,1)',
+      pointBackgroundColor: 'rgba(255, 51, 0,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(255, 51, 0,0.8)'
+    }];
+
+
+  public lineChartDataTemperature: Array<any>;
+  public lineChartOptionsTemperature: any = {
+    responsive: true,
+    title: {
+      display:true,
+      text: 'Últimos datos'
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          min: 0,
+          max: 50
+        }
+      }]
+    }
+  };
+  public lineChartColorsTemperature:Array<any> = [
+    { // grey
+      backgroundColor: 'rgba(0, 153, 255,0.2)',
+      borderColor: 'rgba(0, 153, 255,1)',
+      pointBackgroundColor: 'rgba(0, 153, 255,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(0, 153, 255,0.8)'
+    }];
 
   //tabla oculta
   public ocultar:boolean = true;
@@ -86,15 +139,11 @@ export class StationsComponent implements OnInit {
     }
     this.lineChartLabels = fecha;
     this.lineChartDataTemperature= [
-      {data: temperatura, label: 'Temperatura'}
+      {data: temperatura, label: 'Temperatura ºC'}
     ];
     this.lineChartDataHumidity= [
-      {data: humedad, label: 'Humedad'}
+      {data: humedad, label: 'Humedad %'}
     ];
-  }
-
-  public randomizeType():void {
-    this.lineChartType = this.lineChartType === 'line' ? 'bar' : 'line';
   }
 
   public changeVisibility():void {
