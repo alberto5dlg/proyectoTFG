@@ -11,8 +11,13 @@ exports.getHistorico = function(pet, res) {
     var lista = Station.find({idStation: stationId});
 
     lista.then(function(stationData) {
-        res.status(200);
-        res.send(stationData);
+        if(lista.length == 0){
+            resp.status(404);
+            resp.send("No existen datos para la estación solicitada ...")
+        }else {
+            res.status(200);
+            res.send(stationData);
+        }
     });
     lista.catch(function (err){
         res.status(500);
@@ -51,12 +56,37 @@ exports.getRemoteStation = function(pet, resp){
     })
 };
 
+exports.getHistoricoFecha = function(pet, resp) {
+    var searchDate = pet.params.dateSearch
+    var idStation = pet.params.station;
+    var lista = Station.find({dia: searchDate, idStation: idStation});
+
+    lista.then(function(stationData) {
+        if(stationData.length == 0)
+        {
+            resp.status(404);
+            resp.send("No se han encontrado datos para la fecha seleccionada ...");
+        }else {
+            resp.status(200);
+            resp.send(stationData);
+        }
+    });
+    lista.catch(function (err){
+        resp.status(500);
+        resp.end();
+        console.log('Error: ' + err.message);
+    });
+
+};
+
 //Guarda los datos obtenidos de la estacion en la BBDD
 saveDataStation = function(body) {
     var newStation = Station();
     newStation.idStation = body.name;
     newStation.nombre = body.variables.nombre;
     newStation.fecha = utils.getFechaCompleta();
+    newStation.dia = utils.fechaDeHoy();
+    newStation.hora = utils.getHora();
     newStation.temperatura = body.variables.temperatura;
     newStation.humedad = body.variables.humedad;
     newStation.save(function (error, sta){
