@@ -11,21 +11,10 @@ export class chartVariables {
   public lineChartLabels: Array<any>;
   public lineChartLegend = true;
   public lineChartType = 'line';
-  public lineChartOptions: any = {
-    responsive: true,
-    title: {
-      display:true,
-      text: 'Últimos datos'
-    }
-  };
 
   public lineChartDataHumidity: Array<any>;
   public lineChartOptionsHumidity: any = {
     responsive: true,
-    title: {
-      display:true,
-      text: 'Últimos datos'
-    },
     scales: {
       yAxes: [{
         ticks: {
@@ -51,10 +40,6 @@ export class chartVariables {
   public lineChartDataTemperature: Array<any>;
   public lineChartOptionsTemperature: any = {
     responsive: true,
-    title: {
-      display:true,
-      text: 'Últimos datos'
-    },
     scales: {
       yAxes: [{
         ticks: {
