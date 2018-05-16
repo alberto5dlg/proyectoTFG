@@ -17,7 +17,7 @@
       <p>La estación no se encuentra conectada a la red o tiene algun problema de funcionamiento ... </p>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-4" *ngIf="localWheather">
     <div>
       <h3>Temperatura Local</h3>
       <hr>
@@ -30,11 +30,24 @@
   </div>
   <div class="col-md-2"></div>
 
+   <!-- FILTRAR POR FECHAS -->
+  <div class="col-md-12 center-block">
+     <form (change)="setDataChart($event.target.value)" id="dateTemperature" class="form-inline">
+       <div class="form-group">
+         <label for="date-temperature">Fecha: </label>
+         <input type="date" id="date-temperature" class="form-control mx-sm-3">
+       </div>
+     </form>
+  </div>
+
+  <div class="col-md-12 center-block">
+    <h4>{{tituloGrafica}}</h4>
+  </div>
   <!-- GRAFICAS -->
   <!-- GRAFICA TEMPERATURA -->
   <div class="col-md-6" align="center" *ngIf="chartVariables.lineChartDataTemperature">
       <div style="display: block;">
-        <canvas baseChart width="848" height="424"
+        <canvas id="myChart" baseChart width="848" height="424"
                 [datasets]="chartVariables.lineChartDataTemperature"
                 [labels]="chartVariables.lineChartLabels"
                 [options]="chartVariables.lineChartOptionsTemperature"
@@ -43,14 +56,6 @@
                 [chartType]="chartVariables.lineChartType">
         </canvas>
       </div>
-    <!-- FILTRAR POR FECHAS
-      <form (change)="setDataTemp($event.target.value)" id="dateTemperature" class="form-inline">
-        <div class="form-group">
-          <label for="date-temperature">Fecha: </label>
-          <input type="date" id="date-temperature" class="form-control mx-sm-3">
-        </div>
-      </form>
-    -->
   </div>
 
   <!-- GRAFICA HUMEDAD -->
@@ -65,14 +70,6 @@
               [chartType]="chartVariables.lineChartType">
       </canvas>
     </div>
-    <!-- FILTRAR POR FECHAS
-     <form (change)="setDataTemp($event.target.value)" id="dateTemperature" class="form-inline">
-       <div class="form-group">
-         <label for="date-temperature">Fecha: </label>
-         <input type="date" id="date-temperature" class="form-control mx-sm-3">
-       </div>
-     </form>
-   -->
   </div>
 
 <!-- TABLA HISTORIAL -->

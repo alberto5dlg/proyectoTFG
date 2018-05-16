@@ -33,6 +33,13 @@ export class StationsService {
       .catch(this.handleError)
   }
 
+  getHistoricoByDay(date: string, id: string):Promise<any>{
+    return this.http.get(this.apiUrl + id + '/' + date)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
   //trabajaremos con los datos obtenidos
   private handleData(res: any) {
     let body = res.json();

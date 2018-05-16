@@ -7,7 +7,9 @@ const stationSchema = new Schema({
         nombre:         {type: String},
         temperatura:    {type: Number},
         humedad:        {type: Number},
-        fecha:          {type: Date}
+        fecha:          {type: Date},
+        dia:            {type: String},
+        hora:           {type: String}
 });
 
 module.exports = mongoose.model('Station', stationSchema);
