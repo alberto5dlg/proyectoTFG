@@ -1,0 +1,36 @@
+<div *ngIf="!existePlanos">
+  <h3 class="text-center"> Añadir Planos Hogar</h3>
+  <div class="col-md-2"></div>
+
+  <div class="col-md-8 jumbotron">
+    <form>
+
+      <div class="form-group col-md-12">
+        <div class="col-md-3">
+          <label for="nPlantas">Número de plantas</label>
+          <select class="form-control" id="nPlantas" (change)="setPlantas($event.target.value)">
+            <option selected value="0"></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="col-md-3" *ngIf="totalPlantas">
+          <label>Adjuntar planos</label>
+          <div *ngFor="let i of totalPlantas">
+            <input type="file">
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+  <div class="col-md-2"></div>
+
+</div>

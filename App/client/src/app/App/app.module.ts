@@ -16,6 +16,7 @@ import { StationsService } from "../Stations/stations.service";
 import { chartVariables } from "../Stations/chartVariables.component";
 import { RegStationComponent } from '../RegisteredStations/regStations.component';
 import { StationsComponent } from "../Stations/stations.component";
+import { AdminHouseComponent } from "../AdminHouse/adminHouse.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { StationsComponent } from "../Stations/stations.component";
     HomePageComponent,
     RegStationComponent,
     StationsComponent,
-    chartVariables
+    chartVariables,
+    AdminHouseComponent
   ],
 
   imports: [

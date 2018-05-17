@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { SimpleChanges } from "@angular/core";
 
 import 'rxjs/add/operator/switchMap';
 
