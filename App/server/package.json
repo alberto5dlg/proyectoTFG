@@ -4,7 +4,8 @@
   "description": "Proyecto TFG: backend de la aplicacion",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start-dev": "nodemon index.js"
   },
   "author": "alberto de lucas gomez",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "express": "^4.16.3",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^5.0.12",
+    "multer": "^1.3.0",
     "request": "^2.85.0",
     "yql": "^1.0.2"
   },

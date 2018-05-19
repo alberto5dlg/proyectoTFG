@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 var cors = require('cors');
 
 // use it before all route definitions
-app.use(cors({origin: '*'}));
+app.use(cors({origin: '*',credentials: true}));
 
 //Declaramos la variable de rutas del API
 const stationsRouter = require('./routes/station');
@@ -33,19 +33,6 @@ app.listen(app.get('port'), function() {
 
 //Iniciamos la conexion a la BBDD
 db.DBConnect();
-
-/*utils.almacenarPruebas(23, 50, '2018-05-12');
-utils.almacenarPruebas(22, 55, '2018-05-12');
-utils.almacenarPruebas(24, 45, '2018-05-12');
-utils.almacenarPruebas(21, 40, '2018-05-12');
-utils.almacenarPruebas(20, 43, '2018-05-12');
-utils.almacenarPruebas(25, 42, '2018-05-12');
-utils.almacenarPruebas(22, 54, '2018-05-12');
-utils.almacenarPruebas(30, 60, '2018-05-15');
-utils.almacenarPruebas(33, 62, '2018-05-15');
-utils.almacenarPruebas(31, 60, '2018-05-15');
-utils.almacenarPruebas(29, 59, '2018-05-15');
-utils.almacenarPruebas(28, 56, '2018-05-15');*/
 
 //Lectura de datos automaticamente cada cierto tiempo
 var CronJob = require('cron').CronJob;

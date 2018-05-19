@@ -75,3 +75,23 @@ exports.deleteHome = function(pet, res) {
         }
     })
 };
+
+var multer = require('multer');
+var DIR = '../client/uploads/';
+var upload = multer({dest: DIR}).single('file');
+
+exports.uploadImage = function(pet, res){
+    var path = '';
+    upload(pet, res, function (err) {
+        if (err) {
+            console.log('ERROR: '+ err);
+            return res.status(422).send("an Error occured")
+        }
+        // No error occured.
+        path ={
+            'Status': 'Subido Correctamente',
+            'path': pet.file.path
+        } ;
+        res.send(path);
+    });
+};
