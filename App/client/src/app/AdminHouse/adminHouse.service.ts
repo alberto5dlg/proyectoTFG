@@ -25,6 +25,13 @@ export class AdminHomeService {
       .catch(this.handleError)
   }
 
+  delete(): Promise<any> {
+    return this.http.delete(this.apiUrl + 'delete')
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
   //trabajaremos con los datos obtenidos
   private handleData(res: any) {
     let body = res.json();

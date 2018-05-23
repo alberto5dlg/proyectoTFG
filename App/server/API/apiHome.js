@@ -77,7 +77,7 @@ exports.deleteHome = function(pet, res) {
 };
 
 var multer = require('multer');
-var DIR = '../client/uploads/';
+var DIR = '../client/src/assets';
 var upload = multer({dest: DIR}).single('file');
 
 exports.uploadImage = function(pet, res){
@@ -87,10 +87,12 @@ exports.uploadImage = function(pet, res){
             console.log('ERROR: '+ err);
             return res.status(422).send("an Error occured")
         }
+        console.log(pet.file);
         // No error occured.
         path ={
             'Status': 'Subido Correctamente',
-            'path': pet.file.path
+            'path': pet.file.path,
+            'name':pet.file.filename
         } ;
         res.send(path);
     });

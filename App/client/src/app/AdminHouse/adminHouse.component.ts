@@ -3,7 +3,6 @@ import { AdminHomeService } from "./adminHouse.service";
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import {DOCUMENT} from "@angular/platform-browser";
 
-
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -20,9 +19,7 @@ export class AdminHouseComponent implements OnInit {
     id:'',
     nPlantas:'',
     plantas:[]
-
   };
-  iterador: Number = 0;
 
   public uploader:FileUploader = new FileUploader({url:'http://'+ this.document.location.hostname +':5000/api/home/images'});
 
@@ -31,7 +28,7 @@ export class AdminHouseComponent implements OnInit {
   ngOnInit(): void {
     this.adminHomeService.getHome()
       .then(home => {
-        this.existePlanos = home;
+        this.existePlanos = home[0];
       });
 
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
@@ -46,7 +43,7 @@ export class AdminHouseComponent implements OnInit {
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     let data = JSON.parse(response); //success server response
-    this.home.plantas.push(data.path);
+    this.home.plantas.push('assets/'+data.name);
   }
 
   ngAfterViewInit() {
@@ -67,5 +64,12 @@ export class AdminHouseComponent implements OnInit {
     this.home.id = this.nameHome;
     this.home.nPlantas = this.uploader.queue.length;
     this.adminHomeService.saveData(this.home);
+    console.log(this.home);
+    window.location.reload();
+  }
+
+  public deleteHome() {
+    this.adminHomeService.delete();
+    window.location.reload();
   }
 }
