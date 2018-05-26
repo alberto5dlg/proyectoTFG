@@ -96,7 +96,7 @@
 
   <div class="center-block col-md-10 jumbotron">
     <div *ngFor="let floor of existePlanos.plantas">
-      <img src="{{floor.toString()}}" height="200" width="200">
+      <img src="{{floor}}" style="width: 50%; height: 50%">
     </div>
   </div>
   <div class="col-md-1"></div>
@@ -106,8 +106,6 @@
       <span class="glyphicon glyphicon-trash"></span> Borrar
     </button>
   </div>
-
-
 </div>
 
 
