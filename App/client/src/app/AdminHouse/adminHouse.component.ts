@@ -73,10 +73,4 @@ export class AdminHouseComponent implements OnInit {
     window.location.reload();
   }
 
-  public add_positive() {
-    (imageMarker).trigger('add_marker', {
-      content: 'Content for mock marker should be a bit longer, longer, longer... ok that`s it.',
-      className: 'green'
-    });
-  }
 }
