@@ -1,31 +1,83 @@
+
+<!--  NO HAY CASA REGISTRADA -->
 <div *ngIf="!existePlanos">
   <h3 class="text-center"> Añadir Planos Hogar</h3>
   <div class="col-md-2"></div>
 
   <div class="col-md-8 jumbotron">
     <form>
+      <!-- Seleccionar datos vivienda -->
+      <div class="form-group col-md-4">
+          <label>Nombre</label>
+          <input type="text" class="form-control" placeholder="Nombre hogar ..." (change)="setNameHome($event.target.value)" required>
 
-      <div class="form-group col-md-12">
-        <div class="col-md-3">
-          <label for="nPlantas">Número de plantas</label>
-          <select class="form-control" id="nPlantas" (change)="setPlantas($event.target.value)">
-            <option selected value="0"></option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
+          <div>
+            <label>Adjuntar planos</label>
+            <div class="form-group">
+              <input type="file" class="form-control" name="multiple" ng2FileSelect [uploader]="uploader" multiple  />
+            </div>
+          </div>
+
       </div>
 
-      <div class="col-md-12">
-        <div class="col-md-3" *ngIf="totalPlantas">
-          <label>Adjuntar planos</label>
-          <div *ngFor="let i of totalPlantas">
-            <input type="file">
+      <!-- Visualizacion fichero a subir -->
+      <div class="col-md-8">
+        <p>Archivos: {{ uploader?.queue?.length }}</p>
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th width="50%">Archivo</th>
+            <th>Tamaño</th>
+            <th>Progreso</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of uploader.queue">
+
+            <td><strong>{{ item?.file?.name }}</strong></td>
+
+            <td  nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+
+            <td >
+              <div class="progress" style="margin-bottom: 0;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+              </div>
+            </td>
+
+            <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+            </td>
+
+            <td nowrap>
+              <a (click)="item.remove()" style="cursor: pointer;color: #000000"><i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <div>
+            Progreso
+            <div class="progress" style="">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+            </div>
           </div>
         </div>
+
+      </div>
+
+      <!-- Boton confirmacion -->
+      <div class="col-md-12">
+        <button type="button" class="btn btn-success btn-s"
+                (click)="saveDataHome()" [disabled]="!uploader.getNotUploadedItems().length">
+          <span class="glyphicon glyphicon-upload"></span> Añadir
+        </button>
       </div>
 
     </form>
@@ -34,3 +86,67 @@
   <div class="col-md-2"></div>
 
 </div>
+
+<!-- HAY CASA REGISTRADA -->
+
+<div *ngIf="existePlanos" >
+  <h3 class="text-center">{{existePlanos.id}}</h3>
+
+  <div class="col-md-1"></div>
+
+  <div class="center-block col-md-10 jumbotron">
+    <div class="col-md-2">
+      <div class="panel panel-info"  *ngFor="let st of allStations">
+        <div [routerLink]="['/station', st.id]" class="panel-heading" style="cursor:pointer;">{{st.nombre}}</div>
+        <div class="panel-body">
+          <li> <b>Ip:</b> {{st.ip}} </li>
+          <li> <b>Id:</b> {{st.id}} </li>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-8" id="housePlane" *ngFor="let floor of existePlanos.plantas">
+      <img class="center-block" src="{{floor}}" >
+    </div>
+
+    <div class="col-md-2">
+    </div>
+
+  </div>
+  <div class="col-md-1"></div>
+
+ <div class="col-md-12">
+   <div class="text-center">
+     <button type="button" class="btn btn-success btn-s " routerLink="/register">Sensores</button>
+     <button type="button" class="btn btn-danger btn-s" data-title="Delete" data-toggle="modal" data-target="#delete" >
+        <span class="glyphicon glyphicon-trash"></span> Borrar
+      </button>
+   </div>
+  </div>
+
+</div>
+
+<!-- Modal DELETE -->
+<div class="modal fade" id="delete" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Borrar Hogar</h4>
+      </div>
+      <div class="modal-body">
+        <div align="center">
+          <div align="center" class="alert alert-danger" role="alert">
+            <p>¿Desea borrar los datos?</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger"  (click)="deleteHome()">Borrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

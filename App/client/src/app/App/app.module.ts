@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { AppComponent } from './app.component';
@@ -17,6 +17,9 @@ import { chartVariables } from "../Stations/chartVariables.component";
 import { RegStationComponent } from '../RegisteredStations/regStations.component';
 import { StationsComponent } from "../Stations/stations.component";
 import { AdminHouseComponent } from "../AdminHouse/adminHouse.component";
+import { AdminHomeService } from "../AdminHouse/adminHouse.service";
+
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { AdminHouseComponent } from "../AdminHouse/adminHouse.component";
     RegStationComponent,
     StationsComponent,
     chartVariables,
-    AdminHouseComponent
+    AdminHouseComponent,
+    FileSelectDirective,
+    FileDropDirective
   ],
 
   imports: [
@@ -34,11 +39,10 @@ import { AdminHouseComponent } from "../AdminHouse/adminHouse.component";
     regStationsRoutingModule,
     HttpModule,
     FormsModule,
-    ChartsModule,
-
+    ChartsModule
   ],
 
-  providers: [RegisteredStationsService, StationsService, chartVariables],
+  providers: [RegisteredStationsService, StationsService, chartVariables, AdminHomeService],
 
   bootstrap: [AppComponent]
 })
