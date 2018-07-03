@@ -95,17 +95,36 @@
   <div class="col-md-1"></div>
 
   <div class="center-block col-md-10 jumbotron">
-    <div id="housePlane" *ngFor="let floor of existePlanos.plantas">
-      <img class="center-block" src="{{floor}}" style="width: 50%; height: 50%">
+    <div class="col-md-2">
+      <div class="panel panel-info"  *ngFor="let st of allStations">
+        <div [routerLink]="['/station', st.id]" class="panel-heading" style="cursor:pointer;">{{st.nombre}}</div>
+        <div class="panel-body">
+          <li> <b>Ip:</b> {{st.ip}} </li>
+          <li> <b>Id:</b> {{st.id}} </li>
+        </div>
+      </div>
     </div>
+
+
+    <div class="col-md-8" id="housePlane" *ngFor="let floor of existePlanos.plantas">
+      <img class="center-block" src="{{floor}}" >
+    </div>
+
+    <div class="col-md-2">
+    </div>
+
   </div>
   <div class="col-md-1"></div>
 
  <div class="col-md-12">
-    <button type="button" class="btn btn-danger btn-s center-block" data-title="Delete" data-toggle="modal" data-target="#delete" >
-      <span class="glyphicon glyphicon-trash"></span> Borrar
-    </button>
+   <div class="text-center">
+     <button type="button" class="btn btn-success btn-s " routerLink="/register">Sensores</button>
+     <button type="button" class="btn btn-danger btn-s" data-title="Delete" data-toggle="modal" data-target="#delete" >
+        <span class="glyphicon glyphicon-trash"></span> Borrar
+      </button>
+   </div>
   </div>
+
 </div>
 
 <!-- Modal DELETE -->

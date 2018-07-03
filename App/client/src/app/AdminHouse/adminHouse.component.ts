@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import { AdminHomeService } from "./adminHouse.service";
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import {DOCUMENT} from "@angular/platform-browser";
+import { RegisteredStationsService } from "../RegisteredStations/registeredstations.service";
 
 import 'rxjs/add/operator/switchMap';
 
@@ -20,16 +21,20 @@ export class AdminHouseComponent implements OnInit {
     nPlantas:'',
     plantas:[]
   };
+  allStations:any[] = [];
 
   public uploader:FileUploader = new FileUploader({url:'http://'+ this.document.location.hostname +':5000/api/home/images'});
 
-  constructor(private adminHomeService:AdminHomeService, @Inject(DOCUMENT) private document: any){}
+  constructor(private adminHomeService:AdminHomeService, @Inject(DOCUMENT) private document: any, private registerStations:RegisteredStationsService){}
 
   ngOnInit(): void {
     this.adminHomeService.getHome()
       .then(home => {
         this.existePlanos = home[0];
       });
+
+    this.registerStations.getRegStations()
+      .then(st => this.allStations = st );
 
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
 
@@ -38,7 +43,6 @@ export class AdminHouseComponent implements OnInit {
       console.log(this.home);
       this.saveDataHome2();
     };
-
   }
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
