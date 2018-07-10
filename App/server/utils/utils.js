@@ -82,10 +82,10 @@ exports.getDataAllStations = function(){
     });
 };
 
-exports.almacenarPruebas = function(temp, hum, dia) {
+exports.almacenarPruebas = function(id, nombre, temp, hum, dia) {
     var newStation = Station();
-    newStation.idStation = 'sensor_pruebas';
-    newStation.nombre = 'Pruebas';
+    newStation.idStation = id;
+    newStation.nombre = nombre;
     newStation.fecha = this.getFechaCompleta();
     newStation.dia = dia;
     newStation.hora = this.getHora();
@@ -95,6 +95,6 @@ exports.almacenarPruebas = function(temp, hum, dia) {
         if(error)
             console.log('Error al guardar los datos: '+ error.message);
         else
-            console.log('Guardados los datos con exito de: sensor_pruebas');
+            console.log('Guardados los datos con exito de: ' + id);
     })
 };
