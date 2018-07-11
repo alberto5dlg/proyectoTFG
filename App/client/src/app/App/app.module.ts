@@ -18,7 +18,8 @@ import { RegStationComponent } from '../RegisteredStations/regStations.component
 import { StationsComponent } from "../Stations/stations.component";
 import { AdminHouseComponent } from "../AdminHouse/adminHouse.component";
 import { AdminHomeService } from "../AdminHouse/adminHouse.service";
-
+import { HistorialComponent } from "../Historial/historial.component";
+import { HistorialService } from "../Historial/historial.service";
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 
 @NgModule({
@@ -30,7 +31,8 @@ import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
     chartVariables,
     AdminHouseComponent,
     FileSelectDirective,
-    FileDropDirective
+    FileDropDirective,
+    HistorialComponent
   ],
 
   imports: [
@@ -42,7 +44,13 @@ import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
     ChartsModule
   ],
 
-  providers: [RegisteredStationsService, StationsService, chartVariables, AdminHomeService],
+  providers: [
+    RegisteredStationsService,
+    StationsService,
+    chartVariables,
+    AdminHomeService,
+    HistorialService
+  ],
 
   bootstrap: [AppComponent]
 })

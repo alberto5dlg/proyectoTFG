@@ -1,0 +1,57 @@
+<div align="center">
+  <h3>Historial de Sensores</h3>
+
+  <div class="col-md-2"></div>
+  <div class="col-md-8 text-center"><hr></div>
+  <div class="col-md-2"></div>
+
+  <div class="col-md-12 center-block">
+    <form (change)="setDataChart($event.target.value)" id="dateTemperature" class="form-inline">
+      <div class="form-group">
+        <label for="date-temperature">Fecha: </label>
+        <input type="date" id="date-temperature" class="form-control mx-sm-3">
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-2"></div>
+  <div class="col-md-8 text-center"><hr></div>
+  <div class="col-md-2"></div>
+
+  <div class="col-md-12 text-center">
+    <h4>{{tituloPagina}}</h4>
+  </div>
+
+  <!-- GRAFICAS -->
+  <!-- GRAFICA TEMPERATURA -->
+  <div class="col-md-6" align="center" ><!--*ngIf="chartVariables.lineChartDataTemperature"-->
+    <div style="display: block;" *ngFor="let sttm of arrayCharts">
+      <label>{{sttm.nameSensor}}</label>
+      <canvas id="myChart" baseChart width="848" height="424"
+              [datasets]="sttm.charts.lineChartDataTemperature"
+              [labels]="sttm.charts.lineChartLabels"
+              [options]="sttm.charts.lineChartOptionsTemperature"
+              [colors]="sttm.charts.lineChartColorsTemperature"
+              [legend]="sttm.charts.lineChartLegend"
+              [chartType]="sttm.charts.lineChartType">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- GRAFICA HUMEDAD -->
+  <div class="col-md-6" align="center" ><!-- *ngIf="chartVariables.lineChartDataHumidity" -->
+    <div style="display: block;"  *ngFor="let sthm of arrayCharts">
+      <label >{{sthm.nameSensor}}</label>
+      <canvas baseChart width="848" height="424"
+              [datasets]="sthm.charts.lineChartDataHumidity"
+              [labels]="sthm.charts.lineChartLabels"
+              [options]="sthm.charts.lineChartOptionsHumidity"
+              [colors]="sthm.charts.lineChartColorsHumidity"
+              [legend]="sthm.charts.lineChartLegend"
+              [chartType]="sthm.charts.lineChartType">
+      </canvas>
+    </div>
+  </div>
+
+
+</div>
