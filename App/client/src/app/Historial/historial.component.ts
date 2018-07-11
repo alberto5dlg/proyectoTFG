@@ -22,7 +22,7 @@ export class HistorialComponent implements OnInit {
   allDataStations: any[] = [];
   allData:any[] = [];
   arrayCharts:any[]=[];
-  tituloPagina:String="Ultimas datos recogidos";
+  tituloPagina:String="Últimos datos recogidos";
 
   constructor(
     public chartVar:chartVariables,
@@ -33,7 +33,6 @@ export class HistorialComponent implements OnInit {
   ){ }
 
   ngOnInit(): void {
-
     this.regStationsService.getRegStations()
       .then(st =>{
         this.allStations = st;
@@ -92,7 +91,7 @@ export class HistorialComponent implements OnInit {
     this.arrayCharts = [];
 
     if(dateSearch == ""){
-      this.tituloPagina = "Ultimas datos recogidos";
+      this.tituloPagina = "Últimos datos recogidos";
       for(let st of this.allStations) {
         this.historialService.getHistoricoStation(st.id)
           .then(hst => {
@@ -102,7 +101,7 @@ export class HistorialComponent implements OnInit {
           })
       }
       this.charts.forEach((child) => {
-        child.chart.chart.config.data.labels = this.arrayCharts.charts.lineChartLabels;
+        //child.chart.chart.config.data.labels = this.arrayCharts.charts.lineChartLabels;
       });
     } else {
       this.tituloPagina = "Datos día: " + dateSearch;
@@ -115,7 +114,7 @@ export class HistorialComponent implements OnInit {
           })
       }
       this.charts.forEach((child) => {
-        child.chart.chart.config.data.labels = this.arrayCharts.charts.lineChartLabels;
+        //child.chart.chart.config.data.labels = this.arrayCharts.charts.lineChartLabels;
       });
     }
   }

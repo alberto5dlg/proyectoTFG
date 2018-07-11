@@ -18,7 +18,7 @@ export class StationsComponent implements OnInit {
 
   @ViewChildren(BaseChartDirective) charts: QueryList<BaseChartDirective>;
 
-  tituloGrafica = 'Ultimas 24 Horas';
+  tituloGrafica = 'Últimos datos recogidos';
   idStation: string;
   dataStation:any;
   historialStation:any[];
@@ -83,11 +83,6 @@ export class StationsComponent implements OnInit {
     this.chartVariables.lineChartDataHumidity= [
       {data: humedad, label: 'Humedad %'}
     ];
-    if(tipo == true)
-      this.tituloGrafica = 'Datos día: ' + historial[0].dia;
-    else
-      this.tituloGrafica = 'Últimas 24 Horas';
-
   }
 
   public changeVisibility():void {
@@ -95,7 +90,9 @@ export class StationsComponent implements OnInit {
   }
 
   public setDataChart(dateSearch: any){
+    this.chartVariables = new chartVariables();
     if(dateSearch == ""){
+      this.tituloGrafica = 'Últimos datos recogidos';
       this.stationServ.getHistoricoStation(this.idStation)
         .then(hst =>{
           this.setData(hst, false);
@@ -103,15 +100,16 @@ export class StationsComponent implements OnInit {
             child.chart.chart.config.data.labels = this.chartVariables.lineChartLabels;
           });
         });
-    }
-
-    this.stationServ.getHistoricoByDay(dateSearch, this.idStation)
-      .then(hst =>{
-        this.setData(hst, true);
-        this.charts.forEach((child) => {
+    } else {
+      this.tituloGrafica = 'Datos día: ' + dateSearch;
+      this.stationServ.getHistoricoByDay(dateSearch, this.idStation)
+        .then(hst => {
+          this.setData(hst, true);
+          this.charts.forEach((child) => {
             child.chart.chart.config.data.labels = this.chartVariables.lineChartLabels;
-        });
-      })
+          });
+        })
+    }
   }
 
 }
