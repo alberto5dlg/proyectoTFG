@@ -77,7 +77,7 @@ exports.deleteHome = function(pet, res) {
 };
 
 var multer = require('multer');
-var DIR = '../client/src/assets';
+var DIR = 'App/client/src/assets/';
 var upload = multer({dest: DIR}).single('file');
 
 exports.uploadImage = function(pet, res){

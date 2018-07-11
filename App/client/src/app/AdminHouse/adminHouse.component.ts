@@ -22,6 +22,8 @@ export class AdminHouseComponent implements OnInit {
     plantas:[]
   };
   allStations:any[] = [];
+  split1:any[] = [];
+  split2:any[] = [];
 
   public uploader:FileUploader = new FileUploader({url:'http://'+ this.document.location.hostname +':5000/api/home/images'});
 
@@ -34,7 +36,10 @@ export class AdminHouseComponent implements OnInit {
       });
 
     this.registerStations.getRegStations()
-      .then(st => this.allStations = st );
+      .then(st => {
+        this.allStations = st;
+        this.splitStations();
+      });
 
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
 
@@ -75,6 +80,20 @@ export class AdminHouseComponent implements OnInit {
   public deleteHome() {
     this.adminHomeService.delete();
     window.location.reload();
+  }
+
+  private splitStations():void{
+    if(this.allStations <=1)
+      this.split1 = this.allStations;
+    else{
+      var tam = this.allStations.length;
+
+      for(var i = 0; i < tam/2; i++)
+        this.split1.push(this.allStations[i]);
+
+      for(var i = tam-1; i >= tam/2; i--)
+        this.split2.push(this.allStations[i]);
+    }
   }
 
 }
