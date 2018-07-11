@@ -75,7 +75,7 @@ exports.getAllRegisterStations = function(pet, res) {
     lista.catch(function(err){
         res.status(500);
         res.end();
-        console.log('Error: ' + e.message);
+        console.log('Error: ' + err.message);
     })
 };
 

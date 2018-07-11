@@ -22,6 +22,7 @@ export class HistorialComponent implements OnInit {
   allDataStations: any[] = [];
   allData:any[] = [];
   arrayCharts:any[]=[];
+  tituloPagina:String="Ultimas datos recogidos";
 
   constructor(
     public chartVar:chartVariables,
@@ -52,6 +53,7 @@ export class HistorialComponent implements OnInit {
   }
 
   public setData(allHist:any[]): void {
+    console.log(allHist);
     for(let historial of allHist) {
       var stationCharts: any = {
         nameSensor: "",
@@ -82,7 +84,40 @@ export class HistorialComponent implements OnInit {
       if(!this.containsChart(this.arrayCharts, stationCharts.nameSensor))
         this.arrayCharts.push(stationCharts);
     }
-    console.log(this.arrayCharts);
+  }
+
+  public setDataChart(dateSearch: any){
+    this.allData = [];
+    this.allDataStations = [];
+    this.arrayCharts = [];
+
+    if(dateSearch == ""){
+      this.tituloPagina = "Ultimas datos recogidos";
+      for(let st of this.allStations) {
+        this.historialService.getHistoricoStation(st.id)
+          .then(hst => {
+            this.allDataStations.push(hst);
+            this.allData = this.allDataStations;
+            this.setData(this.allData);
+          })
+      }
+      this.charts.forEach((child) => {
+        child.chart.chart.config.data.labels = this.arrayCharts.charts.lineChartLabels;
+      });
+    } else {
+      this.tituloPagina = "Datos día: " + dateSearch;
+      for(let st of this.allStations) {
+        this.historialService.getHistoricoByDay(dateSearch,st.id)
+          .then(hst =>{
+            this.allDataStations.push(hst);
+            this.allData = this.allDataStations;
+            this.setData(this.allData);
+          })
+      }
+      this.charts.forEach((child) => {
+        child.chart.chart.config.data.labels = this.arrayCharts.charts.lineChartLabels;
+      });
+    }
   }
 
   private containsChart(charts:any, name:String):boolean {
