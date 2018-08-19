@@ -5,6 +5,7 @@ const app = express();
 const utils = require('./utils/utils');
 app.use(bodyParser.json());
 var cors = require('cors');
+const Weather = require('./API/apiWeather');
 
 // use it before all route definitions
 app.use(cors({origin: '*',credentials: true}));
@@ -38,13 +39,13 @@ db.DBConnect();
 var CronJob = require('cron').CronJob;
 
 //Recogemos datos de todas las estaciones cada 10 min
-new CronJob('* /10 * * * *', function() {
+new CronJob('* 10 * * * *', function() {
     utils.getDataAllStations();
 }, null, true);
 
 //Almacenamos datos del API AEMET todos los dias
 new CronJob('00 00 08 * * *', function() {
-    apiWeather.saveWeather();
+    Weather.saveWeather();
 }, null, true);
 
 //exportamos el modulo
