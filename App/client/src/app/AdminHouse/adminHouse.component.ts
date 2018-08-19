@@ -83,7 +83,7 @@ export class AdminHouseComponent implements OnInit {
   }
 
   private splitStations():void{
-    if(this.allStations <=1)
+    if(this.allStations.length <=1)
       this.split1 = this.allStations;
     else{
       var tam = this.allStations.length;

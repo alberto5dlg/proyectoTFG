@@ -5,7 +5,7 @@
 
 // DHT11 sensor pins
 #define DHTPIN 5
-#define DHTTYPE DHT11
+#define DHTTYPE DHT22
 
 // Create aREST instance
 aREST rest = aREST();
@@ -26,7 +26,7 @@ WiFiServer server(LISTEN_PORT);
 // Variables to be exposed to the API
 int temperature;
 int humidity;
-String nombre = "Cocina"; 
+String nombre = "Dormitorio"; 
 
 void setup(void)
 {  
@@ -43,7 +43,7 @@ void setup(void)
     
   // Give name and ID to device
   rest.set_id("1");
-  rest.set_name("sensor_cocina");
+  rest.set_name("sensor_dormitorio");
   
   // Connect to WiFi
   WiFi.begin(ssid, password);
@@ -78,4 +78,3 @@ void loop() {
   rest.handle(client);
  
 }
-

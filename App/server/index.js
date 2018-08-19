@@ -37,35 +37,15 @@ db.DBConnect();
 //Lectura de datos automaticamente cada cierto tiempo
 var CronJob = require('cron').CronJob;
 
-new CronJob('15 10 * * * *', function() {
+//Recogemos datos de todas las estaciones cada 10 min
+new CronJob('* /10 * * * *', function() {
     utils.getDataAllStations();
 }, null, true);
 
-/*utils.almacenarPruebas("sensor_pruebas", "Pruebas", 46, 73, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 48, 71, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 46, 78, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 40, 79, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 49, 70, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 48, 76, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 47, 78, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 44, 70, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 44, 78, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 41, 77, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 45, 79, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 43, 74, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 40, 70, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 42, 75, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 48, 77, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 48, 73, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 42, 74, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 46, 79, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 40, 77, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 42, 77, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 45, 75, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 44, 75, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 49, 78, utils.fechaDeHoy());
-utils.almacenarPruebas("sensor_pruebas", "Pruebas", 45, 75, utils.fechaDeHoy());
-*/
+//Almacenamos datos del API AEMET todos los dias
+new CronJob('00 00 08 * * *', function() {
+    apiWeather.saveWeather();
+}, null, true);
 
 //exportamos el modulo
 module.exports = app;
