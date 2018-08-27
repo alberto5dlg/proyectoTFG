@@ -6,5 +6,6 @@ noteRouter.post('/', api.addNoteStation);
 noteRouter.get('/:date/:station', api.getNotesByFechaStation);
 noteRouter.get('/:station', api.getNotesByStation);
 noteRouter.delete('/:idNote', api.deleteNote);
+noteRouter.put('/:idNote', api.editNote);
 
 module.exports = noteRouter;

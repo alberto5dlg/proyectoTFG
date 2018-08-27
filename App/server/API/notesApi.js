@@ -91,3 +91,37 @@ exports.deleteNote = function (pet, res){
         }
     });
 };
+
+exports.editNote = function(pet, res){
+    var updateNote = new Notes(pet.body);
+    var idNote = pet.params.idNote;
+
+    if(updateNote.idStation == undefined || updateNote.note == undefined ||
+        updateNote.dia == undefined || updateNote.horaInicio == undefined || updateNote.horaFinal == undefined) {
+        res.status(400);
+        res.send("Faltan campos para poder editar la nota");
+    } else {
+        Notes.findOne({_id : idNote}, function(err, data){
+            if(data == undefined){
+                res.status(404);
+                res.send("No existe la nota a editar");
+            } else {
+                data.idStation = updateNote.idStation;
+                data.note = updateNote.note;
+                data.dia = updateNote.dia;
+                data.horaInicio = updateNote.horaInicio;
+                data.horaFinal = updateNote.horaFinal;
+                Notes.update({_id : idNote}, data, function(err){
+                    if(err){
+                        console.log(utils.getFechaCompleta() + " --- ERROR: " + err.message);
+                        res.status(500);
+                        res.send("No se ha podido editar la nota");
+                    } else {
+                        res.status(202);
+                        res.send(data);
+                    }
+                });
+            }
+        });
+    }
+};
