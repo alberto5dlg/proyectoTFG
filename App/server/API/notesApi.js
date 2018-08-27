@@ -48,3 +48,46 @@ exports.getNotesByFechaStation = function(pet, res) {
         console.log(utils.getFechaCompleta() + " --- ERROR: " + err.message);
     });
 };
+
+exports.getNotesByStation = function(pet, res) {
+    var idStation = pet.params.station;
+    var lista = Notes.find({idStation: idStation});
+
+    lista.then(function(data) {
+        if(data.length == 0){
+            res.status(404);
+            res.send("No se han encontrado datos para los filtros seleccionados");
+        } else {
+            res.status(200);
+            res.send(data);
+        }
+    });
+    lista.catch(function (err){
+        resp.status(500);
+        resp.end();
+        console.log(utils.getFechaCompleta() + " --- ERROR: " + err.message);
+    });
+};
+
+exports.deleteNote = function (pet, res){
+    var idNote = pet.params.idNote;
+
+    Notes.findOne({_id : idNote}, function(err, data){
+        if(data == undefined){
+            res.status(404);
+            res.send("No existe la nota");
+        } else {
+            data.remove(function(error){
+                if(!error) {
+                    res.status(204);
+                    res.send("Borrada la nota correctamente");
+                } else {
+                    res.status(500);
+                    res.send("Error del servidor al borrar, intentelo de nuevo mas tarde");
+                    res.end();
+                    console.log(utils.getFechaCompleta() + " --- ERROR: " + error.message)
+                }
+            });
+        }
+    });
+};
