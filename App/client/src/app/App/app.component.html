@@ -22,6 +22,7 @@
       <ul class="nav navbar-nav">
         <li><a routerLink="/">Home</a></li>
         <li><a routerLink="/historial">Historial</a></li>
+        <li><a style="cursor: pointer;cursor: hand" data-title="AddNote" data-toggle="modal" data-target="#addNote">Añadir nota</a></li>
       </ul>
       <ul class="nav navbar-right navbar-nav" style="margin-right: 50px">
         <li class="dropdown">
@@ -40,3 +41,54 @@
 
 
 <!-- FOOTER -->
+
+<!-- MODAL ADD NOTE -->
+<div class="modal fade" id="addNote" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4>Añadir nota</h4>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addNewNote(newNote)" #addNoteForm="ngForm">
+          <div class="form-group form-inline">
+            <label>Estacion:   </label>
+            <select class="form-control input-sm" id="idStation" [(ngModel)]="newNote.idStation" #noteaddidstation="ngModel" name="idstation" required>
+              <option [value]="undefined" disabled selected hidden>Elige estación</option>
+              <option *ngFor="let st of allStations" [value]="st.id">
+                {{st.nombre}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group form-inline">
+            <label>Fecha:   </label>
+            <input class="form-control input-sm" id="fecha" type="date" [(ngModel)]="newNote.dia" #noteadddia="ngModel" name="dia" required>
+          </div>
+          <div class="form-group form-inline">
+            <label>H. Inicio:   </label>
+            <input class="form-control input-sm" id="hInicio" type="time" [(ngModel)]="newNote.horaInicio" #noteaddhinicio="ngModel" name="hinicio" required>
+            <label>H. Fin:</label>
+            <input class="form-control input-sm" id="hFinal" type="time" [(ngModel)]="newNote.horaFinal" #noteaddhfinal="ngModel" name="hfinal" required>
+          </div>
+          <div class="form-group ">
+            <label>Nota:   </label>
+            <textarea class="form-control input-sm" style="resize: none" id="nota" rows="4" [(ngModel)]="newNote.note" #noteaddnote="ngModel" name="nota" required></textarea>
+          </div>
+          <div style="margin:10px;" *ngIf="apiMessage" align="center" class="alert alert-success" role="alert">
+            <strong>{{apiMessage}}</strong>
+          </div>
+          <div style="margin:10px;" *ngIf="apiError" align="center" class="alert alert-danger" role="alert">
+            <strong>{{apiError}}</strong>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-success" >Añadir</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cleanApiMessage()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -11,6 +11,7 @@ import { HomePageComponent } from '../Home/home.component';
 import { AppRoutingModule } from '../Routing/app-routing.module';
 import { regStationsRoutingModule} from '../Routing/regStations-routing.module';
 
+import { AppService } from './app.service';
 import { RegisteredStationsService } from '../RegisteredStations/registeredstations.service';
 import { StationsService } from "../Stations/stations.service";
 import { chartVariables } from "../Stations/chartVariables.component";
@@ -45,6 +46,7 @@ import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
   ],
 
   providers: [
+    AppService,
     RegisteredStationsService,
     StationsService,
     chartVariables,
