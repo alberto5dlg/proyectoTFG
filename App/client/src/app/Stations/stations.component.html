@@ -72,6 +72,40 @@
     </div>
   </div>
 
+  <!-- Mostrar las notas -->
+  <div class="col-md-12" *ngFor="let nt of notesStation">
+    <div class="col-md-1"></div>
+
+    <div class="col-md-2 center-block" >
+        <div class="panel panel-success " >
+          <div class="panel-heading" style="height: 70px; padding-top: 15px">
+            <b>Día: </b>{{nt.dia}}
+            <br>
+            <b>Hora: </b> {{nt.horaInicio}} - {{nt.horaFinal}}
+          </div>
+        </div>
+    </div>
+
+    <div class="col-md-7 text-left" >
+      <div class="panel panel-success">
+        <div class="panel-body"  style="height: 70px; padding-top: 15px" >
+          {{nt.note}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-1 center-block" >
+      <div class="panel panel-success" >
+        <div class="panel-body" style="height: 70px; padding-top: 15px">
+          <button class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button class="btn btn-danger btn-xs" ><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-1"></div>
+  </div>
+
 <!-- TABLA HISTORIAL -->
   <div *ngIf="historial" class="col-md-12 center-block" style=" margin-top: 30px;">
     <button class="btn btn-sm btn-info " (click)="changeVisibility()">Mostrar/Ocultar historial completo</button>

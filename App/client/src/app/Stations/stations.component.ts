@@ -24,6 +24,8 @@ export class StationsComponent implements OnInit {
   historialStation:any[];
   historial:any[];
   localWheather:any[];
+  notesStation:any[] = [];
+
   fecha:string = new Date().toLocaleString();
 
   //tabla oculta
@@ -53,8 +55,16 @@ export class StationsComponent implements OnInit {
         this.dataStation = st;
     });
 
+    this.stationServ.getNotesStation(this.idStation)
+      .then(nt => {
+        this.notesStation = nt;
+        this.notesStation.reverse();
+        this.notesStation = this.notesStation.slice(0,3);
+      });
+
     this.stationServ.getLocalWeather('Benidorm')
-      .then(wt => { this.localWheather = wt})
+      .then(wt => { this.localWheather = wt});
+
   }
 
   goBack():void {
@@ -91,6 +101,7 @@ export class StationsComponent implements OnInit {
 
   public setDataChart(dateSearch: any){
     this.chartVariables = new chartVariables();
+    this.setNotes(dateSearch);
     if(dateSearch == ""){
       this.tituloGrafica = 'Últimos datos recogidos';
       this.stationServ.getHistoricoStation(this.idStation)
@@ -109,6 +120,18 @@ export class StationsComponent implements OnInit {
             child.chart.chart.config.data.labels = this.chartVariables.lineChartLabels;
           });
         })
+    }
+  }
+
+  public setNotes(dateSearch: any): void {
+    this.notesStation = [];
+    if(dateSearch == "") {
+      this.stationServ.getNotesStation(this.idStation)
+        .then(nt => this.notesStation = nt);
+    } else {
+      this.stationServ.getNotesByDate(this.idStation, dateSearch)
+        .then(nt => this.notesStation = nt);
+
     }
   }
 

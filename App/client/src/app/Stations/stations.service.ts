@@ -9,6 +9,7 @@ export class StationsService {
 
   private apiUrl = 'http://'+ this.document.location.hostname +':5000/api/data/';
   private apiWeather = 'http://'+ this.document.location.hostname +':5000/api/weather/';
+  private apiNotes = 'http://'+ this.document.location.hostname +':5000/api/notes/';
 
   constructor(private http: Http, @Inject(DOCUMENT) private document: any){ }
 
@@ -21,6 +22,20 @@ export class StationsService {
 
   getHistoricoStation(id: string): Promise<any> {
     return this.http.get(this.apiUrl + 'historial/' + id)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
+  getNotesStation(id: string): Promise<any>{
+    return this.http.get(this.apiNotes + id)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
+  getNotesByDate(id: string, date: string): Promise<any> {
+    return this.http.get(this.apiNotes + date + '/' + id)
       .toPromise()
       .then(this.handleData)
       .catch(this.handleError)
