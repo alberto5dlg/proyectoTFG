@@ -41,6 +41,20 @@ export class StationsService {
       .catch(this.handleError)
   }
 
+  deleteNotes(idNote: string): Promise<any> {
+    return this.http.delete(this.apiNotes + idNote)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
+  updateNotes(idNote: string, note: any): Promise<any> {
+    return this.http.put(this.apiNotes + idNote, note)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError)
+  }
+
   getLocalWeather(zone: string): Promise<any>{
     return this.http.get(this.apiWeather + zone)
       .toPromise()

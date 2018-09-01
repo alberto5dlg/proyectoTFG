@@ -25,6 +25,10 @@ export class StationsComponent implements OnInit {
   historial:any[];
   localWheather:any[];
   notesStation:any[] = [];
+  currentNote: any;
+  editNote:any = {};
+  apiMessage:string;
+  apiError: string;
 
   fecha:string = new Date().toLocaleString();
 
@@ -135,4 +139,36 @@ export class StationsComponent implements OnInit {
     }
   }
 
+  public getNote(p_note: any): void {
+    this.currentNote = p_note;
+    this.editNote = p_note;
+  }
+
+  public deleteNote(note: any): void {
+    if(!note) { return; }
+    this.stationServ.deleteNotes(note._id)
+      .then(nt => {
+        var index = this.notesStation.indexOf(note);
+        this.notesStation.splice(index,1);
+        this.apiMessage = "Borrado correctamente";
+
+      })
+      .catch( nt => this.apiMessage = nt._body);
+  }
+
+  public updateNote(p_note: any): void {
+    if(!p_note) {return;}
+    console.log(p_note);
+    this.stationServ.updateNotes(this.currentNote._id, p_note)
+      .then(nt => {
+        var index = this.notesStation.indexOf(p_note);
+        this.notesStation[index] = nt;
+        this.apiMessage = "Nota editada correctamente";
+      })
+      .catch(nt => this.apiError = nt._body)
+  }
+
+  private cleanApiMessage(): void {
+    this.apiMessage = null;
+  }
 }
