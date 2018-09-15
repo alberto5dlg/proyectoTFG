@@ -24,6 +24,12 @@ export class StationsComponent implements OnInit {
   historialStation:any[];
   historial:any[];
   localWheather:any[];
+  notesStation:any[] = [];
+  currentNote: any;
+  editNote:any = {};
+  apiMessage:string;
+  apiError: string;
+
   fecha:string = new Date().toLocaleString();
 
   //tabla oculta
@@ -53,8 +59,16 @@ export class StationsComponent implements OnInit {
         this.dataStation = st;
     });
 
+    this.stationServ.getNotesStation(this.idStation)
+      .then(nt => {
+        this.notesStation = nt;
+        this.notesStation.reverse();
+        this.notesStation = this.notesStation.slice(0,3);
+      });
+
     this.stationServ.getLocalWeather('Benidorm')
-      .then(wt => { this.localWheather = wt})
+      .then(wt => { this.localWheather = wt});
+
   }
 
   goBack():void {
@@ -91,6 +105,7 @@ export class StationsComponent implements OnInit {
 
   public setDataChart(dateSearch: any){
     this.chartVariables = new chartVariables();
+    this.setNotes(dateSearch);
     if(dateSearch == ""){
       this.tituloGrafica = 'Últimos datos recogidos';
       this.stationServ.getHistoricoStation(this.idStation)
@@ -112,4 +127,48 @@ export class StationsComponent implements OnInit {
     }
   }
 
+  public setNotes(dateSearch: any): void {
+    this.notesStation = [];
+    if(dateSearch == "") {
+      this.stationServ.getNotesStation(this.idStation)
+        .then(nt => this.notesStation = nt);
+    } else {
+      this.stationServ.getNotesByDate(this.idStation, dateSearch)
+        .then(nt => this.notesStation = nt);
+
+    }
+  }
+
+  public getNote(p_note: any): void {
+    this.currentNote = p_note;
+    this.editNote = p_note;
+  }
+
+  public deleteNote(note: any): void {
+    if(!note) { return; }
+    this.stationServ.deleteNotes(note._id)
+      .then(nt => {
+        var index = this.notesStation.indexOf(note);
+        this.notesStation.splice(index,1);
+        this.apiMessage = "Borrado correctamente";
+
+      })
+      .catch( nt => this.apiMessage = nt._body);
+  }
+
+  public updateNote(p_note: any): void {
+    if(!p_note) {return;}
+    console.log(p_note);
+    this.stationServ.updateNotes(this.currentNote._id, p_note)
+      .then(nt => {
+        var index = this.notesStation.indexOf(p_note);
+        this.notesStation[index] = nt;
+        this.apiMessage = "Nota editada correctamente";
+      })
+      .catch(nt => this.apiError = nt._body)
+  }
+
+  private cleanApiMessage(): void {
+    this.apiMessage = null;
+  }
 }

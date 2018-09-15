@@ -72,6 +72,40 @@
     </div>
   </div>
 
+  <!-- Mostrar las notas -->
+  <div class="col-md-12" *ngFor="let nt of notesStation">
+    <div class="col-md-1"></div>
+
+    <div class="col-md-2 center-block" >
+        <div class="panel panel-success " >
+          <div class="panel-heading" style="height: 70px; padding-top: 15px">
+            <b>Día: </b>{{nt.dia}}
+            <br>
+            <b>Hora: </b> {{nt.horaInicio}} - {{nt.horaFinal}}
+          </div>
+        </div>
+    </div>
+
+    <div class="col-md-7 text-left" >
+      <div class="panel panel-success">
+        <div class="panel-body"  style="height: 70px; padding-top: 15px" >
+          {{nt.note}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-1 center-block" >
+      <div class="panel panel-success" >
+        <div class="panel-body" style="height: 70px; padding-top: 15px">
+          <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#edit" (click)="getNote(nt)"><span class="glyphicon glyphicon-pencil"></span></button>
+          <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete" (click)="getNote(nt)" ><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-1"></div>
+  </div>
+
 <!-- TABLA HISTORIAL -->
   <div *ngIf="historial" class="col-md-12 center-block" style=" margin-top: 30px;">
     <button class="btn btn-sm btn-info " (click)="changeVisibility()">Mostrar/Ocultar historial completo</button>
@@ -93,4 +127,75 @@
     </table>
   </div>
 
+</div>
+
+<!-- MODAL BORRAR -->
+<div class="modal fade" id="delete" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Borrar nota</h4>
+      </div>
+      <div class="modal-body">
+        <div align="center">
+          <div *ngIf="!apiMessage" align="center" class="alert alert-danger" role="alert">
+            <p>¿Desea borrar la nota seleccionada?</p>
+          </div>
+          <div style="margin:10px;" *ngIf="apiMessage" align="center" class="alert alert-success" role="alert">
+            {{apiMessage}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" *ngIf="!apiMessage" (click)="deleteNote(currentNote)">Borrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cleanApiMessage()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR -->
+
+<div class="modal fade" id="edit" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4>Modificar nota</h4>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="updateNote(editNote)" #addNoteForm="ngForm">
+          <div class="form-group form-inline">
+            <label>Estacion:   </label>
+            <input class="form-control input-sm" id="idStation" [(ngModel)]="editNote.idStation" #noteaddidstation="ngModel" name="idstation" value="{{currentNote.idStation}}" placeholder="" required disabled>
+          </div>
+          <div class="form-group form-inline">
+            <label>Fecha:   </label>
+            <input class="form-control input-sm" id="fecha" type="date" value="{{currentNote.dia}}" [(ngModel)]="editNote.dia" #noteadddia="ngModel" name="dia" required>
+          </div>
+          <div class="form-group form-inline">
+            <label>H. Inicio:   </label>
+            <input class="form-control input-sm" id="hInicio" type="time" value="{{currentNote.horaInicio}}" [(ngModel)]="editNote.horaInicio" #noteaddhinicio="ngModel" name="hinicio" required>
+            <label>H. Fin:</label>
+            <input class="form-control input-sm" id="hFinal" value="{{currentNote.horaFinal}}" type="time" [(ngModel)]="editNote.horaFinal" #noteaddhfinal="ngModel" name="hfinal" required>
+          </div>
+          <div class="form-group ">
+            <label>Nota:   </label>
+            <textarea class="form-control input-sm" style="resize: none" id="nota" rows="4" value="{{currentNote.note}}" [(ngModel)]="editNote.note" #noteaddnote="ngModel" name="nota" required></textarea>
+          </div>
+          <div style="margin:10px;" *ngIf="apiMessage" align="center" class="alert alert-success" role="alert">
+            <strong>{{apiMessage}}</strong>
+          </div>
+          <div style="margin:10px;" *ngIf="apiError" align="center" class="alert alert-danger" role="alert">
+            <strong>{{apiError}}</strong>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-success" >Editar</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cleanApiMessage()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
